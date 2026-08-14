@@ -17,6 +17,7 @@
   --radius-card: 18px;
   --radius-feature: 28px;
   --sans: Inter, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 * { box-sizing: border-box; }
@@ -73,8 +74,18 @@ h1 {
   letter-spacing: -.075em;
   line-height: .82;
   margin: 0 0 clamp(1.5rem, 3vh, 2.25rem);
+  position: relative;
+  text-shadow: -1px 0 rgba(138,181,255,.18), 1px 0 rgba(255,202,126,.4), 0 0 24px rgba(255,245,213,.1);
 }
-h1 span { color: #b9b6ad; font-weight: 300; }
+h1 span {
+  background: linear-gradient(103deg in oklch, #a7a49c 0 55%, #c7c4bb 59%, #fff7db 62%, #ffd69a 63.2%, #f7fbff 64.3%, #b9dcff 65.2%, #d6c4ff 66.2%, #aaa79f 70% 100%);
+  background-clip: text;
+  color: #b9b6ad;
+  filter: drop-shadow(-1px 0 rgba(128,179,255,.3)) drop-shadow(1.5px 0 rgba(255,169,112,.28)) drop-shadow(7px 0 18px rgba(255,226,156,.14));
+  font-weight: 300;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .home-description {
   color: #bcbec6;
   font-size: clamp(.92rem, 1.15vw, 1.08rem);
@@ -147,13 +158,14 @@ h1 span { color: #b9b6ad; font-weight: 300; }
 }
 .star-surface { border-radius: 50%; box-shadow: inset 0 0 22px rgba(255,255,255,.34), inset 0 0 44px rgba(203,82,6,.14); inset: 0; position: absolute; }
 .lens-flare-canvas {
-  height: 100%;
-  inset: 0;
+  height: 100vh;
+  left: 0;
   mix-blend-mode: screen;
   pointer-events: none;
   position: absolute;
+  top: 0;
   width: 100%;
-  z-index: 2;
+  z-index: 4;
 }
 .planet {
   background: radial-gradient(circle at 47% 43%, #07080b 0 24%, #020204 66%, #000 100%);
@@ -166,25 +178,29 @@ h1 span { color: #b9b6ad; font-weight: 300; }
   transform: translate(-50%, -50%);
   will-change: left;
   width: 13%;
-  z-index: 3;
+  z-index: 6;
 }
 .signal-card {
-  backdrop-filter: blur(14px);
-  background: rgba(12, 14, 20, .82);
-  border: 1px solid rgba(247, 201, 72, .2);
-  border-radius: var(--radius-card);
+  backdrop-filter: blur(18px);
+  background: rgba(8, 10, 15, .76);
+  border: 1px solid rgba(247, 201, 72, .24);
+  border-radius: var(--radius-control);
   bottom: 3%;
-  box-shadow: 0 24px 80px rgba(0,0,0,.38);
-  left: 4%;
+  box-shadow: 0 24px 80px rgba(0,0,0,.42), inset 0 0 28px rgba(247,201,72,.025);
+  left: 1%;
   overflow: hidden;
-  padding: .55rem .7rem .35rem;
+  padding: .5rem .65rem .35rem;
   position: absolute;
-  width: 49%;
-  z-index: 4;
+  width: 58%;
+  z-index: 7;
 }
 .flux-curve { display: block; overflow: visible; width: 100%; }
-.flux-baseline { fill: none; opacity: .1; stroke: var(--white); stroke-width: 1; }
-.flux-line { fill: none; filter: drop-shadow(0 0 5px rgba(247,201,72,.35)); stroke: var(--gold); stroke-linecap: round; stroke-width: 3; }
+.flux-grid { fill: none; stroke: rgba(238,226,187,.1); stroke-width: .75; }
+.flux-grid path:last-child { stroke-dasharray: 2 4; }
+.flux-ticks { fill: rgba(238,226,187,.5); font-family: var(--mono); font-size: 7.5px; letter-spacing: -.02em; }
+.flux-baseline { fill: none; opacity: .18; stroke: var(--white); stroke-dasharray: 3 4; stroke-width: .85; }
+.flux-line { fill: none; filter: drop-shadow(0 0 5px rgba(247,201,72,.34)); stroke: #ffd34f; stroke-linecap: round; stroke-width: 2; }
+.flux-points circle { fill: #fff4bf; opacity: .72; }
 
 .project-section {
   background: #090b10;
@@ -343,6 +359,7 @@ h1 span { color: #b9b6ad; font-weight: 300; }
   .home-actions { flex-wrap: wrap; max-width: 23rem; }
   .primary-action { flex: 1 0 100%; }
   .hero-visual { bottom: -4vw; opacity: .7; position: absolute; right: -19vw; width: 76vw; z-index: -1; }
+  .lens-flare-canvas { opacity: .78; }
   .signal-card { display: none; }
   .project-section { padding: 4.5rem 1.4rem; }
   .project-intro { display: block; }

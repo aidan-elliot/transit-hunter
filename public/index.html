@@ -13,6 +13,7 @@
 
     <main class="experience">
       <section class="screen home-screen is-active" id="home-screen" aria-labelledby="home-title">
+        <canvas class="lens-flare-canvas" id="lens-flare-canvas" aria-hidden="true"></canvas>
         <div class="home-hero">
           <div class="home-copy">
             <h1 id="home-title">Hunting for<br /><span>shadows.</span></h1>
@@ -42,13 +43,28 @@
                 <span class="star-surface"></span>
               </div>
             </div>
-            <canvas class="lens-flare-canvas" id="lens-flare-canvas" aria-hidden="true"></canvas>
             <div class="planet" id="transit-planet" aria-hidden="true"></div>
-            <div class="signal-card" aria-label="Simplified relative brightness curve synchronized with the transit">
-              <svg class="flux-curve" viewBox="0 0 360 96" role="img" aria-labelledby="flux-title">
+            <div class="signal-card" aria-label="Relative flux measurement synchronized with the transit">
+              <svg class="flux-curve" viewBox="0 0 400 118" role="img" aria-labelledby="flux-title">
                 <title id="flux-title">Relative starlight dips as the planet passes in front of the star</title>
-                <path class="flux-baseline" d="M10 35 H350" />
-                <path class="flux-line" id="flux-line" d="M10 35 C75 35 112 35 140 35 C158 35 165 35 180 35 C195 35 202 35 220 35 C248 35 285 35 350 35" />
+                <g class="flux-grid" aria-hidden="true">
+                  <path d="M44 18H390 M44 42H390 M44 66H390 M44 90H390" />
+                  <path d="M44 18V96 M130 18V96 M217 18V96 M304 18V96 M390 18V96" />
+                </g>
+                <g class="flux-ticks" aria-hidden="true">
+                  <text x="37" y="21" text-anchor="end">1.010</text>
+                  <text x="37" y="45" text-anchor="end">1.000</text>
+                  <text x="37" y="69" text-anchor="end">0.975</text>
+                  <text x="37" y="93" text-anchor="end">0.950</text>
+                  <text x="44" y="111" text-anchor="middle">−0.10</text>
+                  <text x="130" y="111" text-anchor="middle">−0.05</text>
+                  <text x="217" y="111" text-anchor="middle">0</text>
+                  <text x="304" y="111" text-anchor="middle">+0.05</text>
+                  <text x="390" y="111" text-anchor="middle">+0.10</text>
+                </g>
+                <path class="flux-baseline" d="M44 42 H390" />
+                <path class="flux-line" id="flux-line" d="M44 42 C110 42 148 42 177 42 C195 42 202 42 217 42 C232 42 239 42 257 42 C286 42 324 42 390 42" />
+                <g class="flux-points" id="flux-points" aria-hidden="true"></g>
               </svg>
             </div>
           </div>

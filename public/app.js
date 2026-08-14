@@ -205,8 +205,9 @@ function initTransitVisual() {
   const planet = document.querySelector("#transit-planet");
   const stellarLight = document.querySelector(".stellar-light");
   const fluxLine = document.querySelector("#flux-line");
+  const fluxPointsLayer = document.querySelector("#flux-points");
   const canvas = document.querySelector("#lens-flare-canvas");
-  if (!visual || !planet || !stellarLight || !fluxLine || !canvas) return;
+  if (!visual || !planet || !stellarLight || !fluxLine || !fluxPointsLayer || !canvas) return;
 
   const context = canvas.getContext("2d");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -216,10 +217,19 @@ function initTransitVisual() {
   let frame = 0;
   let width = 0;
   let height = 0;
+  const fluxSamples = [50, 70, 91, 112, 134, 155, 174, 190, 204, 217, 230, 244, 260, 280, 302, 324, 346, 368, 386];
+  const fluxNoise = [.1, -.65, .45, -.25, .7, -.4, .25, -.55, .35, -.2, .5, -.3, .15, -.5, .65, -.15, .4, -.6, .2];
+  const fluxPoints = fluxSamples.map((sampleX) => {
+    const point = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    point.setAttribute("cx", sampleX);
+    point.setAttribute("r", "1.35");
+    fluxPointsLayer.appendChild(point);
+    return point;
+  });
 
   function resizeCanvas() {
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    const bounds = visual.getBoundingClientRect();
+    const bounds = canvas.getBoundingClientRect();
     width = Math.max(1, bounds.width);
     height = Math.max(1, bounds.height);
     canvas.width = Math.round(width * ratio);
@@ -243,8 +253,10 @@ function initTransitVisual() {
 
   function drawFlare(overlap, edgeBoost, planetPosition) {
     context.clearRect(0, 0, width, height);
-    const sourceX = width * .5;
-    const sourceY = height * .5;
+    const canvasBounds = canvas.getBoundingClientRect();
+    const starBounds = stellarLight.getBoundingClientRect();
+    const sourceX = starBounds.left - canvasBounds.left + starBounds.width * .5;
+    const sourceY = starBounds.top - canvasBounds.top + starBounds.height * .5;
     const scale = Math.min(width, height);
     const visibility = .18 + (1 - overlap) * .82;
     const intensity = Math.min(1.3, visibility * 1.08 + edgeBoost * .44);
@@ -252,24 +264,32 @@ function initTransitVisual() {
     context.save();
     context.globalCompositeOperation = "screen";
 
-    drawRadial(sourceX, sourceY, scale * .52, [
-      [0, `rgba(255,255,251,${.52 * intensity})`],
-      [.06, `rgba(255,247,210,${.36 * intensity})`],
-      [.22, `rgba(255,195,78,${.19 * intensity})`],
-      [.54, `rgba(221,104,18,${.07 * intensity})`],
+    drawRadial(sourceX - scale * .16, sourceY, scale * 1.22, [
+      [0, `rgba(255,252,231,${.2 * intensity})`],
+      [.18, `rgba(255,226,153,${.15 * intensity})`],
+      [.46, `rgba(255,178,63,${.075 * intensity})`],
+      [.72, `rgba(167,91,32,${.035 * intensity})`],
       [1, "rgba(0,0,0,0)"],
     ]);
 
-    drawRadial(sourceX, sourceY, scale * .095, [
-      [0, `rgba(255,255,255,${.86 * intensity})`],
-      [.1, `rgba(255,253,232,${.62 * intensity})`],
-      [.48, `rgba(255,207,96,${.2 * intensity})`],
+    drawRadial(sourceX, sourceY, scale * .78, [
+      [0, `rgba(255,255,251,${.6 * intensity})`],
+      [.06, `rgba(255,247,210,${.43 * intensity})`],
+      [.24, `rgba(255,195,78,${.22 * intensity})`],
+      [.58, `rgba(221,104,18,${.085 * intensity})`],
+      [1, "rgba(0,0,0,0)"],
+    ]);
+
+    drawRadial(sourceX, sourceY, scale * .13, [
+      [0, `rgba(255,255,255,${.94 * intensity})`],
+      [.1, `rgba(255,253,232,${.72 * intensity})`],
+      [.48, `rgba(255,207,96,${.24 * intensity})`],
       [1, "rgba(0,0,0,0)"],
     ]);
 
     context.save();
-    context.filter = `blur(${Math.max(8, scale * .03)}px)`;
-    const broadStreak = context.createLinearGradient(0, sourceY, width, sourceY);
+    context.filter = `blur(${Math.max(12, scale * .045)}px)`;
+    const broadStreak = context.createLinearGradient(sourceX - scale * 1.35, sourceY, sourceX + scale * 1.35, sourceY);
     broadStreak.addColorStop(0, "rgba(0,0,0,0)");
     broadStreak.addColorStop(.12, `rgba(225,141,35,${.06 * intensity})`);
     broadStreak.addColorStop(.3, `rgba(245,165,51,${.2 * intensity})`);
@@ -278,10 +298,10 @@ function initTransitVisual() {
     broadStreak.addColorStop(.88, `rgba(225,141,35,${.06 * intensity})`);
     broadStreak.addColorStop(1, "rgba(0,0,0,0)");
     context.fillStyle = broadStreak;
-    context.fillRect(0, sourceY - scale * .048, width, scale * .096);
+    context.fillRect(0, sourceY - scale * .075, width, scale * .15);
     context.restore();
 
-    const streak = context.createLinearGradient(0, sourceY, width, sourceY);
+    const streak = context.createLinearGradient(sourceX - scale * 1.25, sourceY, sourceX + scale * 1.25, sourceY);
     streak.addColorStop(0, "rgba(0,0,0,0)");
     streak.addColorStop(.18, `rgba(218,135,31,${.08 * intensity})`);
     streak.addColorStop(.32, `rgba(230,150,42,${.24 * intensity})`);
@@ -296,20 +316,20 @@ function initTransitVisual() {
     streak.addColorStop(.82, `rgba(218,135,31,${.08 * intensity})`);
     streak.addColorStop(1, "rgba(0,0,0,0)");
     context.save();
-    context.shadowBlur = Math.max(12, scale * .03);
+    context.shadowBlur = Math.max(18, scale * .042);
     context.shadowColor = `rgba(255,194,78,${.62 * intensity})`;
     context.fillStyle = streak;
-    context.fillRect(0, sourceY - 1.8, width, 3.6);
+    context.fillRect(0, sourceY - 2.25, width, 4.5);
     context.restore();
 
-    const chromaticStreak = context.createLinearGradient(width * .16, sourceY, width * .84, sourceY);
+    const chromaticStreak = context.createLinearGradient(sourceX - scale * .86, sourceY, sourceX + scale * .86, sourceY);
     chromaticStreak.addColorStop(0, "rgba(0,0,0,0)");
     chromaticStreak.addColorStop(.42, `rgba(119,104,255,${.2 * intensity})`);
     chromaticStreak.addColorStop(.5, `rgba(255,235,179,${.34 * intensity})`);
     chromaticStreak.addColorStop(.58, `rgba(255,158,65,${.18 * intensity})`);
     chromaticStreak.addColorStop(1, "rgba(0,0,0,0)");
     context.fillStyle = chromaticStreak;
-    context.fillRect(width * .16, sourceY + 1.65, width * .68, .8);
+    context.fillRect(0, sourceY + 2.15, width, 1.15);
 
     const glint = context.createLinearGradient(sourceX, sourceY - scale * .12, sourceX, sourceY + scale * .12);
     glint.addColorStop(0, "rgba(0,0,0,0)");
@@ -320,14 +340,15 @@ function initTransitVisual() {
     context.fillStyle = glint;
     context.fillRect(sourceX - .65, sourceY - scale * .12, 1.3, scale * .24);
 
-    const axisX = width * -.12;
-    const axisY = height * .085;
+    const axisX = (width * .5 - sourceX) * .32;
+    const axisY = (height * .5 - sourceY) * .32;
     [
-      { distance: -.9, radius: .022, color: [255, 232, 164], alpha: .22, ring: false },
-      { distance: 1.25, radius: .044, color: [255, 192, 79], alpha: .2, ring: false },
-      { distance: 2.35, radius: .074, color: [129, 111, 255], alpha: .18, ring: true },
-      { distance: 3.45, radius: .052, color: [255, 180, 62], alpha: .18, ring: true },
-      { distance: 4.35, radius: .027, color: [255, 235, 183], alpha: .2, ring: false },
+      { distance: -.75, radius: .027, color: [255, 236, 183], alpha: .24, ring: false },
+      { distance: 1.15, radius: .058, color: [255, 187, 67], alpha: .22, ring: false },
+      { distance: 2.15, radius: .13, color: [126, 112, 255], alpha: .2, ring: true },
+      { distance: 3.2, radius: .085, color: [255, 169, 49], alpha: .21, ring: true },
+      { distance: 4.05, radius: .047, color: [255, 231, 168], alpha: .23, ring: false },
+      { distance: 4.8, radius: .024, color: [156, 193, 255], alpha: .2, ring: true },
     ].forEach((ghost) => {
       const x = sourceX + axisX * ghost.distance;
       const y = sourceY + axisY * ghost.distance;
@@ -341,20 +362,20 @@ function initTransitVisual() {
 
     if (edgeBoost > .015) {
       const side = planetPosition < .5 ? -1 : 1;
-      const contactX = sourceX + side * scale * starRadius;
+      const contactX = sourceX + side * starBounds.width * .5;
       const contactIntensity = edgeBoost * (.35 + (1 - overlap) * .65);
-      drawRadial(contactX, sourceY, scale * .052, [
+      drawRadial(contactX, sourceY, starBounds.width * .12, [
         [0, `rgba(255,255,255,${.76 * contactIntensity})`],
         [.1, `rgba(255,238,174,${.54 * contactIntensity})`],
         [.36, `rgba(255,178,55,${.16 * contactIntensity})`],
         [1, "rgba(0,0,0,0)"],
       ]);
-      const contactStreak = context.createLinearGradient(contactX - scale * .11, sourceY, contactX + scale * .11, sourceY);
+      const contactStreak = context.createLinearGradient(contactX - starBounds.width * .26, sourceY, contactX + starBounds.width * .26, sourceY);
       contactStreak.addColorStop(0, "rgba(0,0,0,0)");
       contactStreak.addColorStop(.5, `rgba(255,248,215,${.7 * contactIntensity})`);
       contactStreak.addColorStop(1, "rgba(0,0,0,0)");
       context.fillStyle = contactStreak;
-      context.fillRect(contactX - scale * .11, sourceY - .7, scale * .22, 1.4);
+      context.fillRect(contactX - starBounds.width * .26, sourceY - .85, starBounds.width * .52, 1.7);
     }
 
     context.restore();
@@ -367,11 +388,17 @@ function initTransitVisual() {
     const innerContact = starRadius - planetRadius;
     const overlap = 1 - smoothstep(innerContact, outerContact, distance);
     const edgeBoost = Math.exp(-Math.pow((distance - starRadius) / .038, 2));
-    const dipY = 35 + overlap * 31;
+    const dipY = 42 + overlap * 35;
 
     planet.style.left = `${(x * 100).toFixed(4)}%`;
     stellarLight.style.opacity = `${(1 - overlap * .055).toFixed(4)}`;
-    fluxLine.setAttribute("d", `M10 35 C75 35 112 35 140 35 C158 35 165 ${dipY.toFixed(2)} 180 ${dipY.toFixed(2)} C195 ${dipY.toFixed(2)} 202 35 220 35 C248 35 285 35 350 35`);
+    fluxLine.setAttribute("d", `M44 42 C110 42 148 42 177 42 C195 42 202 ${dipY.toFixed(2)} 217 ${dipY.toFixed(2)} C232 ${dipY.toFixed(2)} 239 42 257 42 C286 42 324 42 390 42`);
+    fluxPoints.forEach((point, index) => {
+      const normalizedDistance = Math.abs((fluxSamples[index] - 217) / 46);
+      const transitProfile = 1 - smoothstep(.48, 1.08, normalizedDistance);
+      const measuredY = 42 + overlap * 35 * transitProfile + fluxNoise[index] * 1.15;
+      point.setAttribute("cy", measuredY.toFixed(2));
+    });
     drawFlare(overlap, edgeBoost, x);
   }
 
