@@ -20,8 +20,6 @@ const elements = {
   source: document.querySelector("#source-status"),
   global: document.querySelector("#global-curve"),
   local: document.querySelector("#local-curve"),
-  heroCurve: document.querySelector("#hero-curve"),
-  heroToi: document.querySelector("#hero-toi"),
   human: document.querySelector("#human-panel"),
   choices: document.querySelectorAll("[data-guess]"),
   revealStage: document.querySelector("#reveal-stage"),
@@ -62,7 +60,7 @@ function curveDataUri(values) {
     const y = 190 - ((value - low) / (high - low)) * 158;
     return `${index ? "L" : "M"}${x.toFixed(2)} ${y.toFixed(2)}`;
   }).join(" ");
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 220" role="img" aria-label="Folded relative-flux light curve"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#147eab"/><stop offset="1" stop-color="#6757c9"/></linearGradient></defs><rect width="660" height="220" fill="#f7f9fc"/><g stroke="#dce2eb" stroke-width="1"><path d="M28 32H632M28 111H632M28 190H632"/></g><path d="M28 32V190H632" fill="none" stroke="#72809a" stroke-width="1"/><path d="${path}" fill="none" stroke="url(#g)" stroke-width="2.6"/></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 220" role="img" aria-label="Folded relative-flux light curve"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#c88a13"/><stop offset="1" stop-color="#f7c948"/></linearGradient></defs><rect width="660" height="220" fill="#f8f7f2"/><g stroke="#e5e1d5" stroke-width="1"><path d="M28 32H632M28 111H632M28 190H632"/></g><path d="M28 32V190H632" fill="none" stroke="#817d72" stroke-width="1"/><path d="${path}" fill="none" stroke="url(#g)" stroke-width="2.6"/></svg>`;
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
@@ -93,6 +91,7 @@ function showScreen(name) {
   if (showDemo) {
     window.setTimeout(() => elements.choices[0].focus({ preventScroll: true }), 650);
   } else {
+    elements.home.scrollTop = 0;
     window.setTimeout(() => elements.viewDemo.focus({ preventScroll: true }), 650);
   }
 }
@@ -174,12 +173,6 @@ elements.nextCase.addEventListener("click", () => {
   }, 280);
 });
 
-function updateHeroCurve() {
-  const item = cases[0];
-  elements.heroToi.textContent = `TOI ${item.toi}`;
-  renderCurve(elements.heroCurve, item.globalView, item.row, "global");
-}
-
 async function loadRepresentativeCases() {
   try {
     const dataUrl = new URL("data/representative_cases.json", window.location.href);
@@ -199,13 +192,11 @@ async function loadRepresentativeCases() {
     elements.source.textContent = `${cases.length} representative test cases`;
     elements.context.textContent = "Inspect both phase-folded views, then make the call before the model and catalogue are revealed.";
     resetCase();
-    updateHeroCurve();
   } catch (error) {
     const detail = error instanceof Error ? error.message : "unknown error";
     elements.source.textContent = "Documented error-gallery fallback";
     elements.context.textContent = `Representative data could not load (${detail}). Serve the site over HTTP to load the full sample.`;
     resetCase();
-    updateHeroCurve();
   }
 }
 
@@ -259,6 +250,5 @@ function initStarfield() {
 }
 
 resetCase();
-updateHeroCurve();
 loadRepresentativeCases();
 initStarfield();
