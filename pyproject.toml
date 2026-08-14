@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "transit-hunter"
+version = "0.1.0"
+description = "Reproducible TESS TOI catalogue construction and transit-vetting experiments."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Transit Hunter contributors" }]
+dependencies = [
+  "astropy>=6.0",
+  "astroquery>=0.4.7",
+  "jupyter>=1.0",
+  "lightkurve>=2.5",
+  "matplotlib>=3.8",
+  "numpy>=1.26",
+  "pandas>=2.2,<3",
+  "pyyaml>=6.0",
+  "scikit-learn>=1.4",
+  "seaborn>=0.13",
+  "torch>=2.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[project.scripts]
+transit-hunter-freeze-catalog = "transit_hunter.catalog:main"
+transit-hunter-build-splits = "transit_hunter.splits:main"
+transit-hunter-audit-coverage = "transit_hunter.coverage:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/transit_hunter"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

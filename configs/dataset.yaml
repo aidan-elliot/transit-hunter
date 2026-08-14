@@ -1,0 +1,38 @@
+catalogue:
+  table: toi
+  endpoint: https://exoplanetarchive.ipac.caltech.edu/TAP/sync
+  columns:
+    - toi
+    - tid
+    - tfopwg_disp
+    - pl_orbper
+    - pl_tranmid
+    - toi_created
+    - rowupdate
+    - ra
+    - dec
+    - st_tmag
+    - st_teff
+    - st_rad
+labels:
+  positive: [CP]
+  negative: [FP, FA]
+  excluded_unresolved: [PC, APC]
+  held_out_history: [KP]
+lightcurves:
+  mission: TESS
+  author: SPOC
+  exptime_seconds: 120
+  quality_bitmask: default
+preprocessing:
+  outlier_sigma: 8.0
+  flatten_window_points: 301
+bls:
+  minimum_period_days: 0.5
+  maximum_period_days: 30.0
+  grid_points: 300
+  duration_fraction: 0.04
+views:
+  global_bins: 201
+  local_bins: 101
+  local_duration_multiples: 3.0

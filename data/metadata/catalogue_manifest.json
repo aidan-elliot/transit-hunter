@@ -1,0 +1,35 @@
+{
+  "retrieved_on": "2026-08-13",
+  "retrieved_at_utc": "2026-08-14T02:33:02.413932+00:00",
+  "source": "NASA Exoplanet Archive TAP toi table",
+  "tap_endpoint": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync",
+  "format": "csv",
+  "query_file": "toi_query.sql",
+  "query": "SELECT toi, tid, tfopwg_disp, pl_orbper, pl_tranmid, toi_created,\n       rowupdate, ra, dec, st_tmag, st_teff, st_rad\nFROM toi",
+  "query_url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=SELECT+toi%2C+tid%2C+tfopwg_disp%2C+pl_orbper%2C+pl_tranmid%2C+toi_created%2C%0A+++++++rowupdate%2C+ra%2C+dec%2C+st_tmag%2C+st_teff%2C+st_rad%0AFROM+toi&format=csv",
+  "raw_csv": "toi_catalogue_raw_2026-08-13.csv",
+  "raw_csv_sha256": "84fd2343529d86c0897a57a7e2ee146147dede00e32d9dca2429565b606837b2",
+  "labels_snapshot": "labels_snapshot.csv",
+  "known_planets_snapshot": "known_planets_kp.csv",
+  "label_rule": "CP = 1; FP and FA = 0; PC/APC/KP excluded from supervised snapshot",
+  "audit": {
+    "source_rows": 8113,
+    "source_toi_unique": true,
+    "source_unique_tics": 7799,
+    "source_tics_with_multiple_tois": 243,
+    "disposition_counts": {
+      "APC": 487,
+      "CP": 744,
+      "FA": 100,
+      "FP": 1255,
+      "KP": 597,
+      "MISSING": 3,
+      "PC": 4927
+    },
+    "supervised_rows": 2099,
+    "positive_rows": 744,
+    "negative_rows": 1355,
+    "supervised_toi_unique": true,
+    "supervised_unique_tics": 1976
+  }
+}

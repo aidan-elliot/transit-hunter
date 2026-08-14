@@ -1,0 +1,11 @@
+run:
+  seed: 4000
+  output_root: reports/runs
+  device: auto
+  deterministic: true
+provenance:
+  record_git_revision: true
+  record_package_versions: true
+evaluation:
+  threshold_selection: validation_only
+  primary_metric: precision_recall_auc

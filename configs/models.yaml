@@ -1,0 +1,28 @@
+baseline:
+  kind: logistic_regression
+  features: bls_diagnostics
+  class_weight: balanced
+stage1:
+  kind: cnn_global_local
+  fallback: logistic_regression_on_global_local_views
+  epochs: 40
+  batch_size: 64
+  learning_rate: 0.001
+  early_stopping_patience: 6
+stage2:
+  kind: diagnostic_classifier
+  features:
+    - stage1_score
+    - period
+    - duration
+    - depth
+    - power
+    - snr
+    - observed_transits
+    - odd_even_depth_difference
+    - secondary_eclipse_depth
+    - transit_symmetry_difference
+    - sector_to_sector_depth_std
+comparison:
+  - lstm
+  - compact_transformer

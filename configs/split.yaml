@@ -1,0 +1,12 @@
+# Split only after light-curve availability has been audited. A TIC's latest TOI creation
+# date assigns its entire group; this conservatively prevents the same star crossing time splits.
+group_column: tid
+time_column: toi_created
+strategy: temporal_grouped
+group_timestamp: max
+selection:
+  method: group_date_quantiles
+  train_fraction: 0.70
+  validation_fraction: 0.15
+  test_fraction: 0.15
+status: proposed_until_eligible_catalogue_is_frozen
