@@ -101,7 +101,7 @@ function resetCase() {
   const item = cases[currentIndex];
   selectedGuess = null;
   elements.caseId.textContent = `TOI ${item.toi}`;
-  elements.casePosition.textContent = `${String(currentIndex + 1).padStart(2, "0")} / ${String(cases.length).padStart(2, "0")}`;
+  elements.casePosition.textContent = `Case ${currentIndex + 1} of ${cases.length}`;
   renderCurve(elements.global, item.globalView, item.row, "global");
   renderCurve(elements.local, item.localView, item.row, "local");
   elements.choices.forEach((button) => {
@@ -196,7 +196,7 @@ async function loadRepresentativeCases() {
       localView: item.localView,
     }));
     currentIndex = 0;
-    elements.source.textContent = `Representative test sample | ${cases.length} cases`;
+    elements.source.textContent = `${cases.length} representative test cases`;
     elements.context.textContent = "Inspect both phase-folded views, then make the call before the model and catalogue are revealed.";
     resetCase();
     updateHeroCurve();

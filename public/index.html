@@ -10,13 +10,10 @@
   </head>
   <body>
     <canvas id="starfield" aria-hidden="true"></canvas>
-    <div class="ambient-glow ambient-glow-one" aria-hidden="true"></div>
-    <div class="ambient-glow ambient-glow-two" aria-hidden="true"></div>
 
     <main class="experience">
       <section class="screen home-screen is-active" id="home-screen" aria-labelledby="home-title">
         <div class="home-copy">
-          <div class="project-kicker"><span></span> PHY4000 research project</div>
           <h1 id="home-title">Hunting for<br /><span>shadows.</span></h1>
           <p class="home-description">
             A two-stage neural network was trained to vet TESS planet candidates from folded light curves, then tested on unseen observations from a later catalogue snapshot.
@@ -29,27 +26,28 @@
             </button>
             <a class="action-button" href="https://github.com/aidan-elliot/transit-hunter/blob/main/reports/results_summary.md" target="_blank" rel="noreferrer">
               <span>Full report</span>
-              <span class="button-icon" aria-hidden="true">&#8599;</span>
+              <span class="button-icon external-icon" aria-hidden="true">&#8599;</span>
             </a>
             <a class="action-button icon-action" href="https://github.com/aidan-elliot/transit-hunter" target="_blank" rel="noreferrer" aria-label="Open the GitHub repository">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .7a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2.2c-3.4.7-4.1-1.4-4.1-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6a4.7 4.7 0 0 1 1.2-3.2 4.4 4.4 0 0 1 .1-3.2s1-.3 3.2 1.2a11 11 0 0 1 5.9 0C17.1 4.3 18 4.6 18 4.6a4.4 4.4 0 0 1 .1 3.2 4.7 4.7 0 0 1 1.2 3.2c0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .7Z"/></svg>
             </a>
           </div>
-
-          <div class="project-result" aria-label="Headline experiment result">
-            <span class="result-value">87 <b>&#8594;</b> 70</span>
-            <span class="result-copy">accepted false positives<br />after diagnostic vetting</span>
-          </div>
         </div>
 
-        <div class="hero-visual" aria-label="Animated illustration of a planet transiting a star">
-          <div class="orbit orbit-outer" aria-hidden="true"></div>
-          <div class="orbit orbit-inner" aria-hidden="true"></div>
-          <div class="star" aria-hidden="true"><span></span></div>
+        <div class="hero-visual" aria-label="Animated illustration of a dark planet transiting a luminous star">
+          <div class="stellar-light" aria-hidden="true">
+            <div class="stellar-rays"></div>
+            <div class="stellar-corona"></div>
+            <div class="star">
+              <span class="star-surface"></span>
+              <span class="solar-flare flare-one"></span>
+              <span class="solar-flare flare-two"></span>
+            </div>
+          </div>
           <div class="planet" aria-hidden="true"><span></span></div>
           <div class="signal-card">
             <div class="signal-heading">
-              <span><i></i> Held-out TESS signal</span>
+              <span>Held-out TESS signal</span>
               <span id="hero-toi">Loading sample</span>
             </div>
             <div class="signal-image-wrap">
@@ -58,30 +56,25 @@
             </div>
           </div>
         </div>
-
-        <p class="home-note">Candidate vetting experiment <span></span> 2026</p>
       </section>
 
       <section class="screen demo-screen" id="demo-screen" aria-labelledby="demo-title" aria-hidden="true">
         <div class="demo-topline">
           <button class="back-button" id="back-home" type="button"><span aria-hidden="true">&#8592;</span> Overview</button>
           <div class="case-progress">
-            <span id="source-status">Loading representative sample</span>
-            <span class="progress-divider"></span>
-            <span id="case-position">01 / 13</span>
+            <span id="source-status">Loading representative cases</span>
+            <span id="case-position">Case 1 of 13</span>
           </div>
         </div>
 
         <div class="demo-layout">
           <div class="demo-heading">
-            <p class="project-kicker"><span></span> Candidate review</p>
             <h2 id="demo-title">Is there a planet<br />in this signal?</h2>
             <p id="case-context">Inspect both phase-folded views, then make the call before the model and catalogue are revealed.</p>
           </div>
 
           <div class="case-workspace" id="case-workspace">
             <div class="case-identity">
-              <span>Target of Interest</span>
               <strong id="case-id">TOI -</strong>
             </div>
 
@@ -99,8 +92,8 @@
             <div class="decision-stage" id="human-panel">
               <p>What would you classify it as?</p>
               <div class="decision-row" role="group" aria-label="Classify the candidate">
-                <button type="button" data-guess="planet"><span class="choice-dot"></span> Planet candidate</button>
-                <button type="button" data-guess="not-planet"><span class="choice-dot"></span> False positive</button>
+                <button type="button" data-guess="planet">Planet candidate</button>
+                <button type="button" data-guess="not-planet">False positive</button>
               </div>
             </div>
 
@@ -129,8 +122,6 @@
             </div>
           </div>
         </div>
-
-        <p class="demo-disclaimer">Fixed experiment outputs. A classifier score is not confirmation of a planet.</p>
       </section>
     </main>
 
