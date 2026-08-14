@@ -32,12 +32,16 @@ def make_temporal_grouped_split(
     if not 0 < train_fraction < 1 or not 0 < validation_fraction < 1:
         raise ValueError("Split fractions must each be between zero and one.")
     if train_fraction + validation_fraction >= 1:
-        raise ValueError("train_fraction + validation_fraction must leave a non-empty test fraction.")
+        raise ValueError(
+            "train_fraction + validation_fraction must leave a non-empty test fraction."
+        )
 
     output = samples.copy()
     output[time_column] = pd.to_datetime(output[time_column], errors="coerce", utc=True)
     if output[group_column].isna().any() or output[time_column].isna().any():
-        raise ValueError(f"{group_column} and {time_column} must be present and parseable for all samples.")
+        raise ValueError(
+            f"{group_column} and {time_column} must be present and parseable for all samples."
+        )
     group_dates = (
         output.groupby(group_column, as_index=False)[time_column]
         .max()
@@ -47,7 +51,9 @@ def make_temporal_grouped_split(
     )
     group_count = len(group_dates)
     if group_count < 3:
-        raise ValueError("At least three TIC groups are required for train/validation/test partitions.")
+        raise ValueError(
+            "At least three TIC groups are required for train/validation/test partitions."
+        )
     train_end = math.floor(group_count * train_fraction)
     validation_end = math.floor(group_count * (train_fraction + validation_fraction))
     if train_end == 0 or validation_end <= train_end or validation_end >= group_count:
@@ -78,30 +84,44 @@ def split_summary(assignments: pd.DataFrame, group_column: str = "tid") -> dict[
             "group_latest_end": frame["group_latest_labelled_at"].max().isoformat(),
         }
         if "label" in frame:
-            details["class_counts"] = {str(key): int(value) for key, value in frame["label"].value_counts().sort_index().items()}
+            details["class_counts"] = {
+                str(key): int(value)
+                for key, value in frame["label"].value_counts().sort_index().items()
+            }
         summary["partitions"][str(split)] = details
     return summary
 
 
-def write_split_artifacts(assignments: pd.DataFrame, output_dir: Path, group_column: str = "tid") -> tuple[Path, Path]:
+def write_split_artifacts(
+    assignments: pd.DataFrame, output_dir: Path, group_column: str = "tid"
+) -> tuple[Path, Path]:
     """Save assignments and an auditable summary for a frozen eligible population."""
     output_dir.mkdir(parents=True, exist_ok=True)
     assignment_path = output_dir / "split_assignments.csv"
     manifest_path = output_dir / "split_manifest.json"
     assignments.to_csv(assignment_path, index=False)
-    manifest_path.write_text(json.dumps(split_summary(assignments, group_column), indent=2) + "\n", encoding="utf-8")
+    manifest_path.write_text(
+        json.dumps(split_summary(assignments, group_column), indent=2) + "\n", encoding="utf-8"
+    )
     return assignment_path, manifest_path
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build a TIC-grouped temporal split.")
-    parser.add_argument("--input", type=Path, required=True, help="Eligible TOI CSV containing toi_created.")
+    parser.add_argument(
+        "--input", type=Path, required=True, help="Eligible TOI CSV containing toi_created."
+    )
     parser.add_argument("--output-dir", type=Path, default=Path("data/metadata"))
     parser.add_argument("--train-fraction", type=float, default=0.70)
     parser.add_argument("--validation-fraction", type=float, default=0.15)
     args = parser.parse_args()
+    samples = pd.read_csv(args.input)
+    if "is_eligible" not in samples:
+        raise ValueError("Split input must contain the frozen is_eligible decision.")
+    eligible = samples["is_eligible"].astype(str).str.lower().isin({"true", "1"})
+    samples = samples.loc[eligible].copy()
     assignments = make_temporal_grouped_split(
-        pd.read_csv(args.input),
+        samples,
         train_fraction=args.train_fraction,
         validation_fraction=args.validation_fraction,
     )

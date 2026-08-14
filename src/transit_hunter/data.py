@@ -28,7 +28,9 @@ def _json_default(value: object) -> object:
     raise TypeError(f"Metadata value of type {type(value).__name__} is not JSON serializable.")
 
 
-def default_period_grid(time: np.ndarray, minimum_period: float = 0.5, points: int = 300) -> np.ndarray:
+def default_period_grid(
+    time: np.ndarray, minimum_period: float = 0.5, points: int = 2_000
+) -> np.ndarray:
     """Build an explicit BLS period grid from one curve's observing baseline."""
     time = np.asarray(time, dtype=float)
     baseline = float(np.max(time) - np.min(time))
@@ -95,15 +97,21 @@ def build_sample_from_arrays(
     global_view, local_view = folded_views(processed.time, processed.flux, candidate)
     if sector_labels is not None:
         sector_labels = np.asarray(sector_labels)
-        finite_sorted = np.isfinite(np.asarray(time, dtype=float)) & np.isfinite(np.asarray(flux, dtype=float))
+        finite_sorted = np.isfinite(np.asarray(time, dtype=float)) & np.isfinite(
+            np.asarray(flux, dtype=float)
+        )
         sorted_index = np.argsort(np.asarray(time, dtype=float)[finite_sorted], kind="stable")
         aligned_sectors = sector_labels[finite_sorted][sorted_index]
         # Apply the same robust clipping condition used by clean_lightcurve.
-        retained_lookup = np.isin(np.asarray(time, dtype=float)[finite_sorted][sorted_index], processed.time)
+        retained_lookup = np.isin(
+            np.asarray(time, dtype=float)[finite_sorted][sorted_index], processed.time
+        )
         aligned_sectors = aligned_sectors[retained_lookup]
     else:
         aligned_sectors = None
-    diagnostics = diagnostic_features(processed.time, processed.flux, candidate, sector_labels=aligned_sectors)
+    diagnostics = diagnostic_features(
+        processed.time, processed.flux, candidate, sector_labels=aligned_sectors
+    )
     record = {
         "toi": str(toi),
         "candidate": asdict(candidate),
@@ -112,7 +120,13 @@ def build_sample_from_arrays(
         **(metadata or {}),
     }
     path = output_dir / sample_filename(toi)
-    write_sample(path, global_view=global_view, local_view=local_view, diagnostics=diagnostics, metadata=record)
+    write_sample(
+        path,
+        global_view=global_view,
+        local_view=local_view,
+        diagnostics=diagnostics,
+        metadata=record,
+    )
     return path, record
 
 
@@ -159,7 +173,12 @@ def build_dataset(
             )
         except Exception as error:  # noqa: BLE001 - preserve every per-TOI build failure in the manifest.
             manifest_rows.append(
-                {"toi": toi, "status": "failed", "sample_path": "", "error": f"{type(error).__name__}: {error}"}
+                {
+                    "toi": toi,
+                    "status": "failed",
+                    "sample_path": "",
+                    "error": f"{type(error).__name__}: {error}",
+                }
             )
     manifest = pd.DataFrame(manifest_rows).sort_values("toi", kind="stable").reset_index(drop=True)
     manifest.to_csv(output_dir / "samples_manifest.csv", index=False)

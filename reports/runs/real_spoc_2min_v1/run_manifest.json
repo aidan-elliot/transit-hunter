@@ -1,0 +1,22 @@
+{
+  "command": "scripts/run_real_experiments.py",
+  "config_files": {
+    "C:\\Github\\transit-hunter\\configs\\experiment.yaml": "edc88b51117e229429b483c2d47ca6eb8056cf853615e9fa45d234459af08425",
+    "C:\\Github\\transit-hunter\\configs\\models.yaml": "9e255ae5239fc936c5fd8335f6bcfa6a74ef8040f379a5d9351bfc307989a642"
+  },
+  "created_at_utc": "2026-08-14T08:43:47.789953+00:00",
+  "git_revision": "fe45cc4e7b8ceef1d999a06d34a2ea6fe25db43a",
+  "input_files": {
+    "C:\\Github\\transit-hunter\\data\\metadata\\dataset_manifest.json": "3c298d4ccbf41537fac57ac3449c90e151aa5f6004098480d222bc2c43ef464b",
+    "C:\\Github\\transit-hunter\\data\\processed\\spoc_2min_v1\\samples_manifest.csv": "f0cc4faa1edb8b31a8e3ba4ae34d7c198ba9b6c87d53051aa17b38b826a94f25"
+  },
+  "package_versions": {
+    "astropy": "8.0.1",
+    "lightkurve": "2.6.0",
+    "numpy": "2.4.6",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.9.0",
+    "torch": "2.13.0"
+  },
+  "seed": 4000
+}

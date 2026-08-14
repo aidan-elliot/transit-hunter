@@ -1,0 +1,35 @@
+{
+  "groups_crossing_partitions": 0,
+  "partitions": {
+    "train": {
+      "toi_count": 1240,
+      "tic_count": 1183,
+      "group_latest_start": "2018-09-05T18:34:18+00:00",
+      "group_latest_end": "2021-06-23T15:11:41+00:00",
+      "class_counts": {
+        "0": 769,
+        "1": 471
+      }
+    },
+    "validation": {
+      "toi_count": 287,
+      "tic_count": 254,
+      "group_latest_start": "2021-06-23T15:11:41+00:00",
+      "group_latest_end": "2021-12-21T22:33:22+00:00",
+      "class_counts": {
+        "0": 174,
+        "1": 113
+      }
+    },
+    "test": {
+      "toi_count": 285,
+      "tic_count": 254,
+      "group_latest_start": "2021-12-21T22:33:23+00:00",
+      "group_latest_end": "2025-10-16T23:07:41+00:00",
+      "class_counts": {
+        "0": 144,
+        "1": 141
+      }
+    }
+  }
+}

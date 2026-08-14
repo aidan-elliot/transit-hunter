@@ -29,6 +29,10 @@ def evaluate_eligibility(labels: pd.DataFrame, coverage: pd.DataFrame) -> pd.Dat
     output["toi"] = output["toi"].astype("string")
     coverage = coverage.copy()
     coverage["toi"] = coverage["toi"].astype("string")
+    coverage = coverage.loc[
+        :,
+        [column for column in coverage.columns if column == "toi" or column not in output.columns],
+    ]
     output = output.merge(coverage, on="toi", how="left", validate="one_to_one")
     status = output["coverage_status"].fillna("missing").astype(str)
     period = pd.to_numeric(output["pl_orbper"], errors="coerce")

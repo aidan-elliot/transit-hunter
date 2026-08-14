@@ -1,4 +1,4 @@
-# Transit Hunter
+﻿# Transit Hunter
 
 Transit Hunter is a reproducible TESS transit-vetting project. Its core question is whether a second diagnostic stage rejects false positives more effectively than a transit-shape classifier alone.
 
@@ -23,13 +23,13 @@ Or open [notebooks/00_catalog_audit.ipynb](notebooks/00_catalog_audit.ipynb). Th
 
 ## Reproducible run foundation
 
-The next implemented step is an auditable eligibility and temporal-split foundation. `transit_hunter.coverage` queries each TIC once for SPOC 120-second availability without downloading FITS products; `transit_hunter.eligibility` records every inclusion/exclusion reason; and `transit_hunter.splits` places whole TIC groups into chronological partitions. Each later training run must write a manifest with hashes of its configuration and inputs using `transit_hunter.provenance`.
+The implemented real-data foundation is an auditable eligibility and temporal-split pipeline. `transit_hunter.coverage` queries each TIC once for SPOC 120-second availability without downloading FITS products; `transit_hunter.eligibility` records every inclusion/exclusion reason; and `transit_hunter.splits` places whole TIC groups into chronological partitions. Each later training run must write a manifest with hashes of its configuration and inputs using `transit_hunter.provenance`.
 
-Do not create `split_assignments.csv` from the complete label catalogue yet: first build and freeze the light-curve coverage/eligibility manifest.
+The frozen split was created only after the SPOC coverage and eligibility manifests: 1,812 eligible TOIs across 1,691 TICs, partitioned into 1,240 train, 287 validation, and 285 sealed test records.
 
-The complete runtime needs Lightkurve/Astropy/PyTorch; see [runtime compatibility](docs/runtime-compatibility.md) for the current Windows ARM64 limitation and a compatible-environment command sequence.
+The complete runtime was validated on Windows x64 with Python 3.11; see [runtime compatibility](docs/runtime-compatibility.md).
 
-## Planned workflow
+## Completed real-data workflow
 
 1. Download only SPOC 2-minute light curves for TIC IDs in the frozen catalogue.
 2. Clean, flatten, and search each curve with BLS; make global, local, and diagnostic samples.
@@ -40,3 +40,15 @@ The complete runtime needs Lightkurve/Astropy/PyTorch; see [runtime compatibilit
 See [docs/dataset-card.md](docs/dataset-card.md), [docs/methodology.md](docs/methodology.md), and [docs/references.bib](docs/references.bib).
 
 For the exact command order and report evidence map, see [docs/execution-guide.md](docs/execution-guide.md) and [docs/report-outline.md](docs/report-outline.md).
+
+## Real result
+
+The selected two-view CNN and diagnostic Stage 2 were tuned on validation only and evaluated once on the sealed temporal test set. Stage 2 reduced accepted false positives from 87 to 70 (FPR difference -0.118; TIC-grouped bootstrap 95% interval -0.184 to -0.053), while test recall declined from 0.851 to 0.716. See `reports/results_summary.md` for the required interpretation and limitations.
+
+```powershell
+python scripts/audit_coverage_resumable.py
+python -m transit_hunter.splits --input data/metadata/eligible_tois.csv
+python scripts/build_real_dataset.py
+python scripts/run_real_experiments.py
+python scripts/generate_real_report_artifacts.py
+```

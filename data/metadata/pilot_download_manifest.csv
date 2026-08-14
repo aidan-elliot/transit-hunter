@@ -1,0 +1,4 @@
+toi,tid,disposition,status,author,cadence_seconds,sector,raw_points,quality_filtered_points,preprocessed_points,catalogue_period_diagnostic,bls_period,bls_snr,period_or_harmonic_recovered_5pct,sample_path,failure_reason
+141.01,403224672,CP,passed,SPOC,120.0,1,19261,18270,18270,1.0082361,1.010983490595236,12.770671228206794,True,data\processed\pilot\toi_141.01.npz,
+589.01,412961700,FP,passed,SPOC,120.0,34,17457,17365,16889,2.5183846,2.5185529375967515,34.615952276178824,True,data\processed\pilot\toi_589.01.npz,
+1250.01,233059608,FA,passed,SPOC,120.0,14,18654,18419,18419,1.4415044,13.360300613924347,8.25727660742039,False,data\processed\pilot\toi_1250.01.npz,

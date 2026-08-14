@@ -1,0 +1,38 @@
+﻿{
+    "source_catalogue_sha256":  "03d0371b46a34fb4f17e3df6ba6d16aa5dbed8e5871a4fc48ec2a6a4a35f68ac",
+    "processing_config_sha256":  "dd4b2a3d15e4d717561e3a8759fa4afe3b446ae3c5a10d8335aa0307f5f01cf0",
+    "input_tois":  1812,
+    "produced_samples":  1812,
+    "failed_samples":  0,
+    "first_pass_failures":  124,
+    "array_schema":  {
+                         "global_view":  [
+                                             201
+                                         ],
+                         "local_view":  [
+                                            101
+                                        ]
+                     },
+    "diagnostic_features":  [
+                                "depth",
+                                "duration",
+                                "epoch",
+                                "observed_transits",
+                                "odd_even_depth_difference",
+                                "period",
+                                "phase_center",
+                                "power",
+                                "secondary_eclipse_depth",
+                                "sector_to_sector_depth_std",
+                                "snr",
+                                "transit_symmetry_difference"
+                            ],
+    "split_counts":  {
+                         "train":  1240,
+                         "validation":  287,
+                         "test":  285
+                     },
+    "all_finite":  true,
+    "toi_unique":  true,
+    "tic_crossings":  0
+}

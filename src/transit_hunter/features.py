@@ -25,7 +25,9 @@ def fold_phase(time: np.ndarray, period: float, epoch: float) -> np.ndarray:
     return np.mod((np.asarray(time, dtype=float) - epoch) / period + 0.5, 1.0) - 0.5
 
 
-def bin_phase_curve(phase: np.ndarray, flux: np.ndarray, bins: int) -> tuple[np.ndarray, np.ndarray]:
+def bin_phase_curve(
+    phase: np.ndarray, flux: np.ndarray, bins: int
+) -> tuple[np.ndarray, np.ndarray]:
     """Mean-bin a folded curve and fill empty bins with the global median flux."""
     phase = np.asarray(phase, dtype=float)
     flux = np.asarray(flux, dtype=float)
@@ -66,39 +68,32 @@ def bls_search(
     if len(periods) == 0 or not 0 < duration_fraction < 0.25:
         raise ValueError("Supply positive periods and a duration fraction between zero and 0.25.")
 
-    baseline = float(np.median(flux))
-    scatter = float(1.4826 * np.median(np.abs(flux - baseline)))
+    # Use Astropy's likelihood BLS on an explicit period grid derived only from
+    # the observed time baseline; catalogue ephemerides never enter this search.
+    from astropy.timeseries import BoxLeastSquares
+
+    scatter = float(1.4826 * np.median(np.abs(flux - np.median(flux))))
     scatter = max(scatter, np.finfo(float).eps)
-    reference_time = float(np.min(time))
-    width = max(1, round(phase_bins * duration_fraction))
-    best: BLSCandidate | None = None
-    for period in periods:
-        phase = np.mod((time - reference_time) / period, 1.0)
-        bin_index = np.minimum((phase * phase_bins).astype(int), phase_bins - 1)
-        counts = np.bincount(bin_index, minlength=phase_bins)
-        sums = np.bincount(bin_index, weights=flux, minlength=phase_bins)
-        circular_counts = np.concatenate([counts, counts[:width]])
-        circular_sums = np.concatenate([sums, sums[:width]])
-        window_counts = np.convolve(circular_counts, np.ones(width, dtype=int), mode="valid")[:phase_bins]
-        window_sums = np.convolve(circular_sums, np.ones(width), mode="valid")[:phase_bins]
-        means = np.divide(window_sums, window_counts, out=np.full(phase_bins, np.inf), where=window_counts > 0)
-        start = int(np.argmin(means))
-        in_flux = float(means[start])
-        depth = baseline - in_flux
-        snr = depth * np.sqrt(max(window_counts[start], 1)) / scatter
-        candidate = BLSCandidate(
-            period=float(period),
-            epoch=reference_time + ((start + width / 2) / phase_bins) * float(period),
-            duration=float(period * duration_fraction),
-            depth=float(depth),
-            power=float(max(snr, 0.0)),
-            snr=float(snr),
-            phase_center=float((start + width / 2) / phase_bins),
-        )
-        if best is None or candidate.power > best.power:
-            best = candidate
-    assert best is not None
-    return best
+    uncertainty = np.full(len(flux), scatter)
+    minimum_duration = max(2 / 24, float(np.min(periods)) * 0.01)
+    maximum_duration = min(0.5, float(np.min(periods)) * 0.2)
+    durations = np.geomspace(minimum_duration, maximum_duration, 5)
+    result = BoxLeastSquares(time, flux, dy=uncertainty).power(periods, durations)
+    best_index = int(np.nanargmax(result.power))
+    period = float(result.period[best_index])
+    epoch = float(result.transit_time[best_index])
+    depth = float(result.depth[best_index])
+    depth_error = float(result.depth_err[best_index])
+    snr = depth / max(depth_error, np.finfo(float).eps)
+    return BLSCandidate(
+        period=period,
+        epoch=epoch,
+        duration=float(result.duration[best_index]),
+        depth=depth,
+        power=float(result.power[best_index]),
+        snr=snr,
+        phase_center=float(np.mod((epoch - np.min(time)) / period, 1.0)),
+    )
 
 
 def folded_views(
@@ -124,7 +119,10 @@ def folded_views(
 
 
 def diagnostic_features(
-    time: np.ndarray, flux: np.ndarray, candidate: BLSCandidate, sector_labels: np.ndarray | None = None
+    time: np.ndarray,
+    flux: np.ndarray,
+    candidate: BLSCandidate,
+    sector_labels: np.ndarray | None = None,
 ) -> dict[str, float]:
     """Calculate Stage 2 diagnostics from BLS-derived candidate parameters only."""
     time = np.asarray(time, dtype=float)
@@ -132,7 +130,9 @@ def diagnostic_features(
     phase = fold_phase(time, candidate.period, candidate.epoch)
     half_duration = candidate.duration / candidate.period / 2
     in_transit = np.abs(phase) <= half_duration
-    baseline = float(np.median(flux[~in_transit])) if np.any(~in_transit) else float(np.median(flux))
+    baseline = (
+        float(np.median(flux[~in_transit])) if np.any(~in_transit) else float(np.median(flux))
+    )
     cycles = np.rint((time - candidate.epoch) / candidate.period).astype(int)
     odd = in_transit & (cycles % 2 != 0)
     even = in_transit & (cycles % 2 == 0)

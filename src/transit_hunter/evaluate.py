@@ -25,6 +25,7 @@ class BinaryMetrics:
     pr_auc: float
     precision: float
     recall: float
+    f1: float
     specificity: float
     false_positive_rate: float
     true_negatives: int
@@ -34,7 +35,9 @@ class BinaryMetrics:
     threshold: float
 
 
-def evaluate_scores(labels: np.ndarray, scores: np.ndarray, threshold: float = 0.5) -> BinaryMetrics:
+def evaluate_scores(
+    labels: np.ndarray, scores: np.ndarray, threshold: float = 0.5
+) -> BinaryMetrics:
     """Compute discrimination and operating-point metrics for binary prediction scores."""
     labels = np.asarray(labels, dtype=int)
     scores = np.asarray(scores, dtype=float)
@@ -43,15 +46,19 @@ def evaluate_scores(labels: np.ndarray, scores: np.ndarray, threshold: float = 0
     if not np.all(np.isfinite(scores)) or not 0 <= threshold <= 1:
         raise ValueError("Scores must be finite and threshold must lie in [0, 1].")
     prediction = (scores >= threshold).astype(int)
-    tn, fp, fn, tp = (int(value) for value in confusion_matrix(labels, prediction, labels=[0, 1]).ravel())
+    tn, fp, fn, tp = (
+        int(value) for value in confusion_matrix(labels, prediction, labels=[0, 1]).ravel()
+    )
     precision = tp / (tp + fp) if tp + fp else 0.0
     recall = tp / (tp + fn) if tp + fn else 0.0
+    f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
     specificity = tn / (tn + fp) if tn + fp else 0.0
     return BinaryMetrics(
         roc_auc=float(roc_auc_score(labels, scores)),
         pr_auc=float(average_precision_score(labels, scores)),
         precision=precision,
         recall=recall,
+        f1=f1,
         specificity=specificity,
         false_positive_rate=1 - specificity,
         true_negatives=tn,
@@ -84,7 +91,7 @@ def grouped_bootstrap_fpr_difference(
     iterations: int = 1_000,
     seed: int = 4000,
 ) -> tuple[float, float, float]:
-    """Return point estimate and 95% TIC-grouped bootstrap interval for ΔFPR.
+    """Return point estimate and 95% TIC-grouped bootstrap interval for Î”FPR.
 
     Negative values favour Stage 2 because they mean fewer false positives were accepted.
     """
@@ -118,7 +125,9 @@ def grouped_bootstrap_fpr_difference(
     return float(point), float(low), float(high)
 
 
-def write_evaluation_figures(labels: np.ndarray, scores: np.ndarray, output_dir: Path, stem: str) -> tuple[Path, Path]:
+def write_evaluation_figures(
+    labels: np.ndarray, scores: np.ndarray, output_dir: Path, stem: str
+) -> tuple[Path, Path]:
     """Save ROC and precision-recall curves for one validation/test score vector."""
     output_dir.mkdir(parents=True, exist_ok=True)
     labels, scores = np.asarray(labels, dtype=int), np.asarray(scores, dtype=float)

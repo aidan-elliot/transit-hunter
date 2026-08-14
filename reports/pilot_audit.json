@@ -1,0 +1,10 @@
+{
+  "selected_tois": 3,
+  "passed": 3,
+  "failed": 0,
+  "all_spoc": true,
+  "all_120_second": true,
+  "all_views_built": true,
+  "bls_period_or_harmonic_recovery_rate": 0.6666666666666666,
+  "note": "Catalogue ephemerides are used only for the reported BLS recovery diagnostic."
+}

@@ -1,4 +1,4 @@
-# Split only after light-curve availability has been audited. A TIC's latest TOI creation
+﻿# Split only after light-curve availability has been audited. A TIC's latest TOI creation
 # date assigns its entire group; this conservatively prevents the same star crossing time splits.
 group_column: tid
 time_column: toi_created
@@ -9,4 +9,10 @@ selection:
   train_fraction: 0.70
   validation_fraction: 0.15
   test_fraction: 0.15
-status: proposed_until_eligible_catalogue_is_frozen
+status: frozen_2026-08-14
+frozen_population:
+  eligible_tois: 1812
+  unique_tics: 1691
+boundaries:
+  train_group_latest_end: 2021-06-23T15:11:41Z
+  validation_group_latest_end: 2021-12-21T22:33:22Z

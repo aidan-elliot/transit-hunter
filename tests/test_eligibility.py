@@ -14,12 +14,17 @@ def test_eligibility_requires_coverage_and_finite_ephemeris() -> None:
         }
     )
     coverage = pd.DataFrame(
-        {"toi": ["1.01", "2.01", "3.01", "4.01"], "coverage_status": ["available", "available", "available", "not_found"]}
+        {
+            "toi": ["1.01", "2.01", "3.01", "4.01"],
+            "tid": [1, 2, 3, 4],
+            "coverage_status": ["available", "available", "available", "not_found"],
+        }
     )
 
     result = evaluate_eligibility(labels, coverage)
 
     assert result["is_eligible"].tolist() == [True, False, False, False]
+    assert "tid" in result and "tid_x" not in result and "tid_y" not in result
     assert eligibility_summary(result) == {
         "coverage_not_found": 1,
         "eligible": 1,

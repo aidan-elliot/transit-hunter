@@ -1,0 +1,9 @@
+{
+  "stage2_minus_stage1_fpr": [
+    -0.11805555555555552,
+    -0.18368689581095599,
+    -0.052631578947368474
+  ],
+  "selected_on_validation_only": true,
+  "stage2_training_stage1_scores": "3-fold TIC-grouped out-of-fold CNN scores"
+}

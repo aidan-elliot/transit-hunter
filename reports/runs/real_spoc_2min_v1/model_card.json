@@ -1,0 +1,8 @@
+{
+  "architecture": "two-branch 1D CNN",
+  "parameter_count": 38273,
+  "selected_seed": 4002,
+  "device": "cpu",
+  "cross_fitting": "3-fold TIC-grouped outer folds with grouped inner early-stopping validation",
+  "formal_feature_leakage_check": "catalogue period/midpoint absent"
+}

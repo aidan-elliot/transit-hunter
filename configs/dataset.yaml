@@ -1,4 +1,4 @@
-catalogue:
+﻿catalogue:
   table: toi
   endpoint: https://exoplanetarchive.ipac.caltech.edu/TAP/sync
   columns:
@@ -30,7 +30,7 @@ preprocessing:
 bls:
   minimum_period_days: 0.5
   maximum_period_days: 30.0
-  grid_points: 300
+  grid_points: 2000
   duration_fraction: 0.04
 views:
   global_bins: 201

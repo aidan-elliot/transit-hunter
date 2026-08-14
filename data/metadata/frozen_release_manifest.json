@@ -1,0 +1,22 @@
+﻿{
+    "frozen_at_utc":  "2026-08-14T08:47:23.1010146Z",
+    "files":  {
+                  "data/metadata/labels_snapshot.csv":  "03d0371b46a34fb4f17e3df6ba6d16aa5dbed8e5871a4fc48ec2a6a4a35f68ac",
+                  "data/metadata/coverage_manifest.csv":  "9ccad36bb980ed45d3e2e1acdbfad9dddb93b9570b60a8aa993f72bb4f83e2c3",
+                  "data/metadata/eligible_tois.csv":  "7334800ed828c124d492470a805a026646c3846bd658da086a702f984166c400",
+                  "data/metadata/split_assignments.csv":  "7b14912029fd336b069e89c5cd79a74ca2866d7d8bac98f84734e8f0b0ab2a4f",
+                  "data/metadata/dataset_manifest.json":  "54ad93e5c6305e159c2c60147d1e33068e57047096d008594525fd6ad1d83300",
+                  "configs/dataset.yaml":  "dd4b2a3d15e4d717561e3a8759fa4afe3b446ae3c5a10d8335aa0307f5f01cf0",
+                  "configs/split.yaml":  "9f04168c5dd68c1e8b817c01c26c5671feb201d400b88ef60e7d9daeb9ff1730",
+                  "configs/models.yaml":  "9e255ae5239fc936c5fd8335f6bcfa6a74ef8040f379a5d9351bfc307989a642"
+              },
+    "counts":  {
+                   "supervised_tois":  2099,
+                   "eligible_tois":  1812,
+                   "unique_eligible_tics":  1691,
+                   "train":  1240,
+                   "validation":  287,
+                   "test":  285,
+                   "built_samples":  1812
+               }
+}

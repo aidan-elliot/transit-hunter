@@ -1,4 +1,4 @@
-# Execution guide
+﻿# Execution guide
 
 ## Compatible environment
 
@@ -23,6 +23,15 @@ Before downloading the full catalogue, run the stratified pilot from notebook 01
 6. Cross-fit Stage 1 training scores before fitting Stage 2; call `train_two_stage_feature_experiment()` to enforce that discipline.
 7. Generate test figures and the result summary only after model/threshold choices are fixed.
 
-## Local validation completed here
+## Real-data execution completed on x64
 
-This Windows ARM64 workspace cannot install the Lightkurve/Astropy/PyTorch stack; see `runtime-compatibility.md`. The portable pipeline components run here with synthetic tests: preprocessing, injected-transit BLS recovery, sample serialization, grouped splits, baseline/Stage 2 training, bootstrap evaluation, figures, provenance, and report summary generation.
+The complete Python 3.11 workflow was executed on Windows x64 on 2026-08-14. Coverage resolved all 1,976 supervised TICs; 1,812 TOIs passed frozen eligibility; all 1,812 produced finite `(201,)` global and `(101,)` local samples. The sealed test results and grouped-bootstrap interval are in `reports/results_summary.md` and `reports/runs/real_spoc_2min_v1/`.
+
+The resumable commands used for the real-data layers are:
+
+```powershell
+python scripts/audit_coverage_resumable.py
+python scripts/build_real_dataset.py
+python scripts/run_real_experiments.py
+python scripts/generate_real_report_artifacts.py
+```
