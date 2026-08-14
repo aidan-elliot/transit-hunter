@@ -24,9 +24,9 @@
         <div class="section-heading">
           <p class="eyebrow">Candidate review desk</p>
           <h2 id="lab-title">Make your call</h2>
-          <p id="case-context" class="muted">A deliberately difficult error-gallery case from the sealed temporal test set.</p>
+          <p id="case-context" class="muted">A deterministic, outcome-stratified sample from the sealed temporal test set.</p>
         </div>
-        <div class="case-bar" aria-live="polite"><span id="case-id">TOI —</span><span>Folded view · relative flux</span><span id="case-position">Case 1 of 6</span></div>
+        <div class="case-bar" aria-live="polite"><span id="case-id">TOI —</span><span id="source-status">Loading representative sample…</span><span id="case-position">Case 1 of 13</span></div>
         <div class="curves" aria-label="Global and local folded light-curve views">
           <figure class="curve-panel"><figcaption>Global view <span>201 phase bins</span></figcaption><div class="curve-crop"><img id="global-curve" src="./assets/error_gallery.png" alt="Global folded light curve for the current test case" /></div></figure>
           <figure class="curve-panel"><figcaption>Local view <span>101 phase bins</span></figcaption><div class="curve-crop"><img id="local-curve" src="./assets/error_gallery.png" alt="Local folded light curve around the current candidate event" /></div></figure>
@@ -49,11 +49,11 @@
           <article><p class="metric">85.1% <span>→</span> 71.6%</p><p>test recall; the false-positive gain came with a real cost</p></article>
           <article><p class="metric">−0.118</p><p>false-positive-rate difference, with a 95% grouped-bootstrap interval of −0.184 to −0.053</p></article>
         </div>
-        <p class="evidence-note" id="evidence-note">Every displayed curve is a documented model error from the project’s error gallery. They are useful for discussing difficult decisions—not a random sample or a measure of the model’s overall accuracy.</p>
+        <p class="evidence-note" id="evidence-note">These 13 real curve pairs mirror the full Stage 2 test outcome mix: 8 correct predictions and 5 errors.</p>
       </section>
       <section class="about" aria-labelledby="about-title">
         <p class="eyebrow">About this demonstration</p><h2 id="about-title">Candidate vetting is not planet discovery.</h2>
-        <p>This site uses fixed outputs from the reproducible experiment: six held-out light-curve pairs, their recorded model scores, and their frozen NASA Exoplanet Archive dispositions. It does not query a live catalogue or claim that an individual score confirms a planet.</p>
+        <p>This site uses fixed outputs from the reproducible experiment: 13 representative held-out light-curve pairs, their recorded model scores, and their frozen NASA Exoplanet Archive dispositions. It does not query a live catalogue or claim that an individual score confirms a planet.</p>
         <div class="resource-links"><a href="https://github.com/aidan-elliot/transit-hunter/blob/main/reports/results_summary.md" target="_blank" rel="noreferrer">Read the results summary <span aria-hidden="true">↗</span></a><a href="https://github.com/aidan-elliot/transit-hunter" target="_blank" rel="noreferrer">Explore the full repository <span aria-hidden="true">↗</span></a></div>
       </section>
     </main>

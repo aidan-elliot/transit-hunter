@@ -9,7 +9,7 @@ let cases = [
 
 const thresholds = { stage1: 0.345, stage2: 0.343 };
 const elements = {
-  caseId: document.querySelector("#case-id"), casePosition: document.querySelector("#case-position"), context: document.querySelector("#case-context"), evidenceNote: document.querySelector("#evidence-note"), global: document.querySelector("#global-curve"), local: document.querySelector("#local-curve"), human: document.querySelector("#human-panel"), choices: document.querySelectorAll("[data-guess]"), revealGrid: document.querySelector("#reveal-grid"), visitor: document.querySelector("#visitor-verdict"), visitorDecision: document.querySelector("#visitor-decision"), visitorDetail: document.querySelector("#visitor-detail"), modelDecision: document.querySelector("#model-decision"), modelDetail: document.querySelector("#model-detail"), catalogue: document.querySelector("#catalogue-verdict"), catalogueDecision: document.querySelector("#catalogue-decision"), catalogueDetail: document.querySelector("#catalogue-detail"), nextRow: document.querySelector("#next-row"), revealAnswer: document.querySelector("#reveal-answer"), nextCase: document.querySelector("#next-case"),
+  caseId: document.querySelector("#case-id"), casePosition: document.querySelector("#case-position"), context: document.querySelector("#case-context"), evidenceNote: document.querySelector("#evidence-note"), source: document.querySelector("#source-status"), global: document.querySelector("#global-curve"), local: document.querySelector("#local-curve"), human: document.querySelector("#human-panel"), choices: document.querySelectorAll("[data-guess]"), revealGrid: document.querySelector("#reveal-grid"), visitor: document.querySelector("#visitor-verdict"), visitorDecision: document.querySelector("#visitor-decision"), visitorDetail: document.querySelector("#visitor-detail"), modelDecision: document.querySelector("#model-decision"), modelDetail: document.querySelector("#model-detail"), catalogue: document.querySelector("#catalogue-verdict"), catalogueDecision: document.querySelector("#catalogue-decision"), catalogueDetail: document.querySelector("#catalogue-detail"), nextRow: document.querySelector("#next-row"), revealAnswer: document.querySelector("#reveal-answer"), nextCase: document.querySelector("#next-case"),
 };
 let currentIndex = 0;
 let selectedGuess = null;
@@ -94,20 +94,25 @@ resetCase();
 
 async function loadRepresentativeCases() {
   try {
-    const response = await fetch("./data/representative_cases.json");
-    if (!response.ok) return;
+    const dataUrl = new URL("data/representative_cases.json", window.location.href);
+    const response = await fetch(dataUrl, { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status} at ${dataUrl.pathname}`);
     const payload = await response.json();
-    if (!Array.isArray(payload.cases) || payload.cases.length === 0) return;
+    if (!Array.isArray(payload.cases) || payload.cases.length === 0) throw new Error("The data file has no cases");
     cases = payload.cases.map((item) => ({
       toi: item.toi, label: item.label === 1 ? "CP" : "FP", stage1: item.stage1Score,
       stage2: item.stage2Score, globalView: item.globalView, localView: item.localView,
     }));
     currentIndex = 0;
+    elements.source.textContent = "Representative test sample · 13 cases";
     elements.context.textContent = "A deterministic, outcome-stratified sample from the sealed temporal test set.";
     elements.evidenceNote.textContent = "These 13 real curve pairs are selected to mirror the full Stage 2 test outcome mix: 8 correct predictions and 5 errors.";
     resetCase();
-  } catch (_) {
-    // The static error-gallery fallback remains visible until the real export is present.
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : "Unknown loading error";
+    elements.source.textContent = "Error-gallery fallback · 6 cases";
+    elements.context.textContent = `Representative data could not load (${detail}). Showing documented error-gallery cases instead.`;
+    elements.evidenceNote.textContent = "Every displayed curve is a documented model error from the project’s error gallery, not a representative performance sample.";
   }
 }
 loadRepresentativeCases();
