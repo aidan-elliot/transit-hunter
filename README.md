@@ -2,6 +2,34 @@
 
 Transit Hunter is a reproducible TESS transit-vetting project. Its core question is whether a second diagnostic stage rejects false positives more effectively than a transit-shape classifier alone.
 
+## Interactive demonstration
+
+The repository includes a dependency-free static site in `public/` for a live
+candidate-vetting demonstration. It serves six real held-out light-curve pairs
+from the curated error gallery, with the recorded Stage 1 and Stage 2 scores and
+frozen catalogue outcomes. The site labels this deliberately challenging sample
+clearly; it is not a live classifier or a substitute for the full evaluation.
+
+To deploy it on Vercel, import this repository and use the repository root as
+the project root. Vercel serves `public/index.html` with no build command or
+environment variables required.
+
+To replace the included error-gallery demonstration with a representative
+sealed-test sample, rebuild `data/processed/spoc_2min_v1` in the supported x64
+environment and run:
+
+```powershell
+python scripts/export_representative_demo.py
+```
+
+This produces `public/data/representative_cases.json`: 13 real curve pairs,
+selected deterministically to mirror the Stage 2 test outcome mix.
+
+If you only have the ARM Windows device available, trigger **Export
+representative demo data** from the repository's GitHub Actions tab. It runs the
+same two export scripts on an Ubuntu x64 runner and commits only the compact
+`public/data/representative_cases.json` file needed by the site.
+
 ## First milestone: a frozen label catalogue
 
 The initial dataset has one row per TESS Object of Interest (TOI), using NASA Exoplanet Archive's live `toi` table.

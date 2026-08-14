@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="An interactive demonstration of TESS transit-candidate vetting." />
+    <title>Transit Hunter — Candidate vetting demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="Transit Hunter home">TRANSIT<br />HUNTER</a>
+      <p class="header-note">An interactive look at TESS candidate vetting</p>
+      <a class="header-link" href="https://github.com/aidan-elliot/transit-hunter" target="_blank" rel="noreferrer">View the research repository <span aria-hidden="true">↗</span></a>
+    </header>
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="eyebrow">PHY4000 · live demonstration</p>
+        <h1 id="hero-title">Could you spot<br />a planet’s shadow?</h1>
+        <p class="hero-copy">Inspect an actual, held-out TESS light-curve pair. Make a call before seeing how the two-stage classifier—and the frozen catalogue—resolved it.</p>
+        <a class="start-link" href="#lab">Try a difficult case <span aria-hidden="true">↓</span></a>
+      </section>
+      <section class="lab" id="lab" aria-labelledby="lab-title">
+        <div class="section-heading">
+          <p class="eyebrow">Candidate review desk</p>
+          <h2 id="lab-title">Make your call</h2>
+          <p id="case-context" class="muted">A deliberately difficult error-gallery case from the sealed temporal test set.</p>
+        </div>
+        <div class="case-bar" aria-live="polite"><span id="case-id">TOI —</span><span>Folded view · relative flux</span><span id="case-position">Case 1 of 6</span></div>
+        <div class="curves" aria-label="Global and local folded light-curve views">
+          <figure class="curve-panel"><figcaption>Global view <span>201 phase bins</span></figcaption><div class="curve-crop"><img id="global-curve" src="./assets/error_gallery.png" alt="Global folded light curve for the current test case" /></div></figure>
+          <figure class="curve-panel"><figcaption>Local view <span>101 phase bins</span></figcaption><div class="curve-crop"><img id="local-curve" src="./assets/error_gallery.png" alt="Local folded light curve around the current candidate event" /></div></figure>
+        </div>
+        <div class="callout" id="human-panel">
+          <p class="prompt">Would you promote this candidate for follow-up?</p>
+          <div class="decision-row" role="group" aria-label="Your candidate assessment"><button type="button" data-guess="planet">Likely a planet</button><button type="button" data-guess="not-planet">Likely not a planet</button><button type="button" data-guess="unsure">Not sure</button></div>
+        </div>
+        <div class="reveal-grid" id="reveal-grid" hidden>
+          <section class="verdict visitor-verdict" id="visitor-verdict" aria-live="polite"><p class="verdict-label">Your call</p><h3 id="visitor-decision">—</h3><p id="visitor-detail" class="muted"></p></section>
+          <section class="verdict model-verdict" aria-live="polite"><p class="verdict-label">The model’s call</p><h3 id="model-decision">—</h3><p id="model-detail" class="muted"></p></section>
+          <section class="verdict catalogue-verdict" id="catalogue-verdict" hidden aria-live="polite"><p class="verdict-label">Frozen catalogue outcome</p><h3 id="catalogue-decision">—</h3><p id="catalogue-detail" class="muted"></p></section>
+        </div>
+        <div class="next-row" id="next-row" hidden><button type="button" class="reveal-button" id="reveal-answer">Reveal the catalogue outcome</button><button type="button" class="next-button" id="next-case" hidden>Review another case <span aria-hidden="true">→</span></button></div>
+      </section>
+      <section class="evidence" aria-labelledby="evidence-title">
+        <div><p class="eyebrow">The full evaluation, not a game score</p><h2 id="evidence-title">What the complete sealed test set showed</h2></div>
+        <div class="metric-grid">
+          <article><p class="metric">87 <span>→</span> 70</p><p>accepted false positives after the diagnostic second stage</p></article>
+          <article><p class="metric">85.1% <span>→</span> 71.6%</p><p>test recall; the false-positive gain came with a real cost</p></article>
+          <article><p class="metric">−0.118</p><p>false-positive-rate difference, with a 95% grouped-bootstrap interval of −0.184 to −0.053</p></article>
+        </div>
+        <p class="evidence-note" id="evidence-note">Every displayed curve is a documented model error from the project’s error gallery. They are useful for discussing difficult decisions—not a random sample or a measure of the model’s overall accuracy.</p>
+      </section>
+      <section class="about" aria-labelledby="about-title">
+        <p class="eyebrow">About this demonstration</p><h2 id="about-title">Candidate vetting is not planet discovery.</h2>
+        <p>This site uses fixed outputs from the reproducible experiment: six held-out light-curve pairs, their recorded model scores, and their frozen NASA Exoplanet Archive dispositions. It does not query a live catalogue or claim that an individual score confirms a planet.</p>
+        <div class="resource-links"><a href="https://github.com/aidan-elliot/transit-hunter/blob/main/reports/results_summary.md" target="_blank" rel="noreferrer">Read the results summary <span aria-hidden="true">↗</span></a><a href="https://github.com/aidan-elliot/transit-hunter" target="_blank" rel="noreferrer">Explore the full repository <span aria-hidden="true">↗</span></a></div>
+      </section>
+    </main>
+    <footer>Transit Hunter · TESS TOI candidate-vetting experiment · 2026</footer>
+    <script src="./app.js"></script>
+  </body>
+</html>
