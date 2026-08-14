@@ -1,0 +1,658 @@
+SOURCE: C:\Users\aidan\Downloads\PHY 4000_Learners Manual - Summer 2026 V0.pdf
+PAGES: 15
+
+===== PAGE 1 =====
+ 
+Learner Manual 
+ 
+PHY 4000 Black holes, Big Bangs and the Cosmos 2026 Edition 
+(Rev2 Summer) 
+ 
+This manual brings together much of the information about the course into a single,  printable 
+package. All of the information that is here is also available in Brightspace 
+Contents 
+PHY 4000 Black holes, Big Bangs and the Cosmos 2026 Edition (Rev 2 Summer)..................................... 1 
+Welcome! .................................................................................................................................................... 4 
+A word about me......................................................................................................................................... 4 
+A word about Cosmology and our course title............................................................................................ 4 
+Course weekly Schedule check rev 01 ......................................................................................................... 5 
+Note: All the assignments are due on corresponding Fridays by 6:00 pm. The actual dates will be 
+posted in Brightspace. ................................................................................................................................ 5 
+Date ............................................................................................................................................................ 5 
+Weekly Theme and Learning Outcomes .................................................................................................... 5 
+Learning Activities/Resources ..................................................................................................................... 5 
+Assessments (%).......................................................................................................................................... 5 
+Matter and Energy, Big Bang. ..................................................................................................................... 5 
+Orientation reading in Blackboard. Review Learner Manual and Text selection. Read PPT 1 Intro/Scale 
+factors, Content of Universe. Read e-text Chapter 1................................................................................. 5 
+History of Cosmology. Key ideas and figures (Copernicus, Galileo, Newton etc.) ..................................... 5 
+Read e-text Chapter 2 and 3. ...................................................................................................................... 5 
+Gravity, Energy basic concepts applied to the Cosmos .............................................................................. 5 
+Read e-text Chapter 3................................................................................................................................. 5 
+Week 2 materials due as per Brightspace .................................................................................................. 5 
+Continued with extra reading on Relativity theories (Special and General Einstein)................................. 5 
+e-text Chapter 3.......................................................................................................................................... 5 
+Importance of Light as a key monitor of the Universe, .............................................................................. 5 
+Reading/video: PPT#4 Light ........................................................................................................................ 5 
+
+===== PAGE 2 =====
+ 
+including week 5 materials on Light, Quantum/matter.............................................................................. 5 
+Quantum Structure of matter (Quarks, Protons, Neutrons, Heisenberg Uncertainty etc.) ....................... 5 
+Standard Model. Four forces Matter PPT EXTRA # 4. ................................................................................ 5 
+Quiz as per Brightspace schedule (Week 7) plus Final Project Proposal. .................................................. 5 
+Further discussion of solar system and instruments used to study it and Universe in general. ............... 6 
+READING WEEK ........................................................................................................................................... 6 
+No Assigned work this week ....................................................................................................................... 6 
+Galaxies, our local Galaxy (Milky Way) and Hubble’s measurements of Universe recession plus Hubble’s 
+law .............................................................................................................................................................. 6 
+Read e-text Chapters 10,11 and 12. ........................................................................................................... 6 
+No assignment ............................................................................................................................................ 6 
+Further review of selected video and audio materials related to Cosmology, including search for 
+Exoplanets. ................................................................................................................................................. 6 
+Read e-text Chapters 7 ............................................................................................................................... 6 
+Due: due as per Brightspace (7%)............................................................................................................... 6 
+The start of the Universe including the Big Bang and Inflation in the first fraction of its existence ......... 6 
+Read e-text Chapter13................................................................................................................................ 6 
+The discovery of Dark Matter and Dark energy and the relationship to Matter and the composition of 
+the universe ................................................................................................................................................ 6 
+Read e-text Chapter 14. .............................................................................................................................. 6 
+Materials in week 10, 11 and 12) ............................................................................................................... 6 
+Possibilities for life elsewhere in the Universe. Exoplanets and the concept of habitable zones ............. 6 
+Read e-text Chapter 7 and 15. .................................................................................................................... 6 
+through 14), EXTRA materials, Other e Text chapters/material., video/other media) ............................... 7 
+*Review any issues with Final Project with Professor, before submission. ............................................... 7 
+Also, Discussion 2 due as per Brightspace .................................................................................................. 6 
+through 14), EXTRA materials, Other e Text chapters/material., video/other media) ............................... 7 
+Read e-Text Chapter 7 and 15. ................................................................................................................... 7 
+Course Policies ....................................................................................................................................... 7 
+Attendance ........................................................................................................................................ 8 
+Assignment Due Dates and Submission ............................................................................................ 8 
+Writing .............................................................................................................................................. 8 
+
+===== PAGE 3 =====
+ 
+Assignments and Evaluation ....................................................................................................................... 8 
+Evaluation.......................................................................................................................................... 8 
+Reading Quizzes ................................................................................................................................ 9 
+Discussion Participation .................................................................................................................... 9 
+Assignments.............................................................................................................................................. 10 
+General Written Assignment Guidelines ......................................................................................... 10 
+Final Project ......................................................................................................................................... 11 
+Final Project Proposal...................................................................................................................... 12 
+Final Project..................................................................................................................................... 13 
+Documentation .................................................................................................................................... 13 
+What is Documentation? ................................................................................................................ 13 
+Choosing a Citation Style ................................................................................................................ 14 
+What is Plagiarism? ......................................................................................................................... 14 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Welcome! 
+This on-line elective course will explore the many facets of Cosmology, through reading reviews  of audio 
+and video material and via a final project of the learner 's choice. The course takes place entirely on-line 
+and offers the learner a great deal of flexibility in developing his or her own course of study, but it also has 
+regular scheduled tasks that must be kept up. 
+The Orientation Unit in the BrightSpace course shell will familiarize  you with the layout of information in the 
+course, with the ideas and concepts we will be working with, and with the use of Brightspace tools. It is 
+there that your journey should begin. 
+A word about me 
+My name is Asghar Gill, I am partially available in the term but have very little physical presence on the 
+Algonquin College campus. Please contact me by email with any issues, and we can arrange a Teams/Phone 
+conversation, if necessary. 
+In the 1990’s I earned a master’s and a Ph.D. in Physics specializing in applied Physics. Spent my early days 
+in Microelectronics, Pharmaceuticals, Aerospace industries. Currently I am working in Defense and Security 
+application industry. 
+Please contact me at gilla@algonquincollege.com . 
+A word about Cosmology and our course title 
+Over the course of the semester, we will examine many facets of Cosmology, which is the general backdrop 
+word covering our course Black holes, Big Bangs and the Cosmos. The purist might note that there is only 
+one Big Bang, however recent theoretical work has discussed the possibilities of the “Big Bang” happening 
+endlessly in the so-called Multiverse. 
+To begin, however, it may be most useful to review the usual definition of the term Cosmology:  
+A study of the origin, evolution, and eventual fate of the universe (Wikipedia).  
+Course Text (Required)… More info on course code etc. in Announcements 
+The soft copy version of the text book 
+“The Cosmic Perspective Fundamentals” Edn. 3. J. Bennett et al; Pearson. (2019) 
+ISBN-13: 978-0134988504 ISBN-10: 0134988507 
+An etext /Digital version of this soft cover text is “The Cosmic Perspective Fundamentals  
+ISBN: 9780134899923, Edition 3, Author Bennett, Donahue; Schneider, V - Lifetime Access 
+Note. There may be slightly older, less expensive, versions that are ok for use available for purchase  (check 
+Amazon !). There are only small variations in the text over the last several years. 
+In addition to the course text, learners will make use of resources on the internet, and/or at the library in 
+their learning throughout the course. 
+(Course weekly schedule follows which will be updated  occasionally,  check separate weekly Course 
+information tab  in Brightspace ) 
+
+===== PAGE 5 =====
+ 
+Course weekly Schedule check rev 01 
+Note: All the assignments are due on corresponding Fridays by 6:00 pm. The actual dates will be posted in Brightspace. 
+ 
+Date Weekly Theme and 
+Learning Outcomes 
+Learning 
+Activities/Resources 
+Assessments 
+(%) CLRs 
+Week 1 
+Orientation: Scale factors of 
+Universe. Initial discussion of 
+Dark 
+Matter and Energy, Big Bang. 
+Orientation reading in Blackboard. 
+Review Learner Manual and Text 
+selection. Read PPT 1 Intro/Scale 
+factors, Content of Universe.  
+Read e-text Chapter 1. 
+Personal 
+Introduction 
+Post/Discussion 1 
+(7%) 
+1, 2 
+Week 2 
+History of Cosmology. Key ideas 
+and figures (Copernicus, 
+Galileo, Newton etc.) 
+Reading/Video: History of 
+Cosmology 
+(EXTRA materials - Visible 
+Astronomy) 
+Read e-text Chapter 2 and 3. 
+Quiz 1 (8%) on 
+Week 1 materials 
+due as per 
+Brightspace 
+1,2 
+Week 3 
+ 
+Gravity, Energy basic concepts 
+applied to the Cosmos 
+Reading/Video: Gravity and Energy 
+(EXTRA Materials - Relativity 
+theories) 
+Read e-text Chapter 3 
+Quiz 2 (8%) on 
+Week 2 materials 
+due as per 
+Brightspace 
+1,2 
+Week 4 
+Gravity and Energy concepts 
+Continued with extra reading 
+on Relativity theories (Special 
+and General Einstein) 
+Reading/Video: Gravity and Energy 
+(EXTRA Materials - Relativity 
+theories) 
+Read e-text Chapter 3 
+ 1,2, 4 
+Week 5 Importance of Light as a key 
+monitor of the Universe, Reading/video: Light 
+First Review of 
+Materials covered to 
+date 
+including week 5 
+materials on Light, 
+Quantum/matter 
+1, 3 
+Week 6 
+Quantum Structure of matter 
+(Quarks, Protons, Neutrons, 
+Heisenberg Uncertainty etc.) 
+Building blocks of the 
+Universe/Matter and the 
+Quantum. 
+Standard Model. Four forces Matter 
+Quiz as per 
+Brightspace 
+schedule (Week 7) 
+plus Final Project 
+Proposal. 
+1,2,3,4 
+
+===== PAGE 6 =====
+ 
+Date Weekly Theme and 
+Learning Outcomes 
+Learning 
+Activities/Resources 
+Assessments 
+(%) CLRs 
+Week 7 
+Overview of our solar system 
+and instruments/equipment 
+used to study it and Universe in 
+general 
+Further discussion of solar 
+system and instruments used 
+to study it and Universe in 
+general. 
+Reading/video: Our Solar system. 
+Also, Bizarre Stellar Graveyard. 
+(also, EXTRA materials - Telescopes 
+and Instruments). Read e-text 
+Chapters 8 and 9. 
+Quiz 3: Due: as per 
+Brightspace (on 
+Week 1 through 
+week 5 Materials) 
+(8%) Final.  
+Project Proposal 
+Due: as per Brightspace 
+(10%) 
+1,2,3,4 
+Week 8 READING WEEK No Assigned work this week   
+Week 9 
+Galaxies, our local Galaxy 
+(Milky Way) and Hubble’s 
+measurements  of Universe 
+recession plus Hubble’s law 
+Reading/video: Our Milky Way and 
+Hubble’s Law 
+Read e-text Chapters 10,11 and 12. 
+No assignment 1,2,3 
+Week 10 
+Further review of selected 
+video and audio materials 
+related to Cosmology, including 
+search for Exoplanets. 
+Other Media: View 2 of the 5 
+selected videos (see Unit Overview 
+page of Learner Manual for 
+list/access details) and extra 
+materials in e-text (e.g., Planetary 
+science, EXO planets etc.) 
+Read e-text Chapters 7 
+Due: Friday 
+(8%) Quiz4: due as 
+per Brightspace, 
+week 6 through 9 
+materials 
+Discussion 2 
+Due: due as per 
+Brightspace (7%) 
+1,2,3,4 
+Week 11 
+The start of the Universe 
+including the Big Bang and 
+Inflation in the first fraction of 
+its existence 
+Reading/video: BIG BANG 
+Read e-text Chapter13. 
+ 1,2 
+Week 12 
+The discovery of Dark Matter 
+and Dark energy and the 
+relationship to Matter and the 
+composition of the universe 
+Reading/video: PPT#9 Dark Matter 
+and Dark Energy 
+Read e-text Chapter 14. 
+REVIEW of 
+Materials in week 
+10, 11 and 12) 
+1,2,3,4 
+Week 13 
+Possibilities for life elsewhere 
+in the Universe. Exoplanets and 
+the concept of habitable zones 
+Optional Reading /Video: PPT#10 LIFE 
+in the Universe 
+Read e-text Chapter 7 and 15. 
+Discussion 2 due as 
+per Brightspace 4 
+
+===== PAGE 7 =====
+ 
+Date Weekly Theme and 
+Learning Outcomes 
+Learning 
+Activities/Resources 
+Assessments 
+(%) CLRs 
+Week 14 
+Optional review of life and 
+Exoplanets and topics 
+related to the course 
+(e.g. Posted Material (weeks 
+10 
+through 14), EXTRA materials, 
+Other e Text chapters/material., 
+video/other media) 
+Optional Reading/Video: LIFE in the 
+Universe 
+*Review any issues with Final Project 
+with Professor, before submission.  
+Final Project* 
+Due as per 
+Brightspace 
+Quiz 5: on week 10 
+through 13 
+Materials, due as 
+per Brightspace (8%) 
+ 
+4 
+Week 15 
+Optional review of life and 
+Exoplanets and topics 
+related to the course 
+(e.g. Posted Material (weeks 
+10 
+through 14), EXTRA materials, 
+Other e Text chapters/material., 
+video/other media) 
+Final Assessment  Week 
+Optional Reading 
+/Video: LIFE in the Universe 
+Read e-Text Chapter 7 and 15. 
+ 
+ 
+4 
+ 
+Course Policies 
+Learners are responsible for making themselves familiar with the College’s policies and rules outlined 
+in the Learner Handbook; these include the Algonquin College Code of Conduct which requires, in 
+part, that learners: 
+• Conduct themselves in a manner which respects and promotes the dignity of others, and 
+interact with others in the community in a spirit of cooperation, goodwill, and mutual 
+respect. 
+This is particularly important in an online environment, where jokes and irony can be easily 
+misinterpreted. Be considerate and clear! 
+The College Directive on Plagiarism, (AA48), is also presented in detail in the Learner Handbook and it 
+is one that learners should be particularly careful to familiarize  themselves with since a plea of 
+ignorance is not an acceptable defense against a charge of academic dishonesty . It is currently 
+deemed to be the case  that use of AI software such as ChatGPT (for example) is deemed to be  
+plagiarism. An F grade will be applied to assignments using such tools without a  valid reason/defence. 
+The Learner Handbook is an essential reference tool which all learners should keep handy at all times. 
+
+===== PAGE 8 =====
+ 
+Attendance 
+1. Even though this is an on- line course, you are still expected to "attend". Learners 
+must log into Brightspace and check their Algonquin email account regularly to 
+ensure they receive announcements and communications from the instructor in a 
+timely fashion. 
+2. Missed periods of attendance cannot be made up later – the course elements must 
+be attended to on a weekly basis. 
+3. Your assignments will be assessed, to a certain extent, on the degree to which the elements 
+discussed and presented on-line are reflected in the finished product. 
+Assignment Due Dates and Submission 
+1. All assignments must be submitted by the deadline specified. 
+2. Extensions are not possible for most course elements, and missed work generally cannot 
+be made up. 
+3. Major assignments may be accepted late, at the instructor’s discretion, but 
+a penalty of one grade division per day will apply. 
+4. If you are in doubt, contact your instructor. 
+Writing 
+All assignments must be submitted in proper English. Careless or sloppy writing will be penalized. 
+Learners are advised to: 
+• Proofread all written work carefully before posting it into Brightspace. 
+• In the case of difficulty, write assignments in a word processing program like  MS Word or 
+Open Office and then use the spelling/grammar  software to check their work before pasting 
+it into Brightspace 
+• Keep a good dictionary handy (e.g. The Canadian Oxford Dictionary). This will be a lifelong 
+asset to you no matter what you do. The investment will pay for itself a thousand times 
+over. 
+• Computer software is not smart, it’s only quick – “smart” needs you. Be there! 
+ 
+Assignments and Evaluation 
+Evaluation 
+The following will provide evidence of your learning achievement (details below): 
+Assessment Value CLRs 
+
+===== PAGE 9 =====
+ 
+Discussion Posts (Qty 2) 14% 1, 2, 3, 4 
+Assignment: Quizzes (Qty 5) 40% 1,2,3,4 
+Final Project initial proposal 10% 1,2, 3,4 
+Final Project submission 36% 1,2,3,4 
+   
+ 
+N.B. Learners must submit a proposal for the Final Project prior to submitting the final project. If learner s do 
+not submit the proposal, they will receive a zero (0) for the final project.  
+Learners can track their assignments and running grades in My Grades. 
+If you have any questions or concerns about these requirements, please send me an email at 
+gilla@algonquincollege.com  – I am here to help and virtually always, or rather always virtually around.  
+ 
+Reading Quizzes 
+For each unit, learners will complete a quiz based on the assigned materials (PowerPoints etc.) and 
+unit reading. 
+Each quiz will be available from the start date of the unit, but will disappear after the due date. 
+Learners will need to ensure that they read the assigned material for the unit and visit this section at 
+the time of their choosing before the due date to complete the quiz. 
+Each quiz will feature multiple choice questions and short-answer questions. Learners will be able to 
+save their work and return to the quiz as many times as they like. However, each quiz can only be 
+submitted once. 
+If you have any problems or concerns with the quiz, please do not hesitate to e-mail your professor. 
+ 
+Discussion Participation 
+Think of the discussion board as a class discussion: a place to share your opinion, comment on the unit's 
+readings, audio and video materials and respond to issues raised by both the professor and your fellow 
+classmates. 
+Your instructor will lead off the class discussion with a series of questions to consider. You should 
+frame your posts as a response to either the professor’s leading post, or to the comments of a 
+classmate (i.e. Use the “reply” button rather than opening a new thread). You must post in a 
+minimum of two different  question threads for each unit to receive your credit. You may post as 
+many times as you like to develop the class discussion, and the more you participate, the more you 
+will get out of the course. 
+Your posts must satisfy the following criteria: 
+• Clear: Readers must be able to understand the message easily. Avoid chat jargon and 
+
+===== PAGE 10 =====
+ 
+unexplained acronyms. Polish your language to clear it of spelling and grammar errors. 
+Proofread before posting. 
+• Reflection: Take time to consider your responses before composing them. Think about the 
+texts and the questions and ponder. 
+• Analysis: Your posts should offer a meaty contribution to the discussion at hand, not just a 
+statement whether or not you liked the material.  
+• Supported : Use examples to demonstrate what you mean, and provide documentation 
+information for other sources that you refer to, so that we can follow it up (such as a 
+hyperlink, or list the title and author). 
+• Open: Make sure that someone else can pick up the discussion and continue it from where 
+you leave off. Ask questions for others to answer. Suggest directions for further 
+exploration. 
+Posts that do not fully fulfill these criteria will not receive full marks. 
+ 
+ 
+Assignments 
+General Written Assignment Guidelines 
+Language: 
+All assignments must be written in clear, correct, polished English, and should be proofread before 
+submission. Marks will be deducted for sloppy grammar, spelling, and punctuation. 
+Due Dates: 
+Assignments may be submitted as far in advance as you like, but they must be uploaded before the 
+due date and time. Assignments submitted after that time will  automatically be marked as late. A 
+penalty of one grade division per day will apply. 
+Submission Formats: 
+Prepare your assignment using a word processing program like Word or Open Office. Then, click on 
+the assignment link to upload your file. The following file formats are acceptable: .doc, .docx (MS 
+Word) preferred but also acceptable in general are .odt (Open Office), .pdf (Adobe Acrobat ), .rtf 
+(many platforms). When uploading a file to the forums, please use .pdf to ensure that everyone 
+using any platform can read it easily.  
+Identification:  
+No title page is needed, but the top of the first page should bear the learner’s name, learner 
+number, assignment, and course number. All pages should be numbered. 
+The file name must include the learner's name and assignment. Example for a l earner named 
+Josephine Skywalker: SkywalkerJ_Final project prop1.pdf 
+ 
+
+===== PAGE 11 =====
+ 
+Final Project 
+General Information 
+What the final project for this course will be is entirely up to the individual  ( ie 
+not a team effort) learner, but it will consist of three parts. 
+a) Final Project Proposal worth 10%, 
+b) The finished Final Project itself, 
+c) A brief Explanatory Statement connecting your project to the course. 
+The final project is an opportunity for learners to demonstrate their understanding of the course 
+content in a creative and interesting fashion. 
+These projects can take any number of forms depending on the Lerner’s field of study and areas of 
+interest. The baseline requirement is that the project must be related to the course in some way. 
+NOTES: 
+• Although the project must be substantial (it is worth 36% of the mark), the point of the 
+project is to have fun with some aspects of Cosmology. 
+• Remember, Cosmology is the study of the origin, evolution, and eventual fate of the 
+universe so you have a lot of potential topics to consider (a partial list of topics is included 
+below.) 
+• If you are stuck for a topic, think about the things you enjoyed the most about the materials 
+we have studied so far and build on one of those ideas. 
+• The final form of the project should be something that can be uploaded for grading 
+and possibly sharing with the class.  
+• It is entirely possible that your project will not require any extra research above and 
+beyond material in your textbook that we have not covered in detail in the course 
+(e.g Exoplanets, General Relativity), but if you do look at other sources, ensure that 
+you document your sources properly. See the Documentation area for more info.  
+• Projects with excessive spelling and grammatical errors, or that are otherwise not 
+presented with professional polish will be penalized. 
+• Partial list of Final Project topics.  
+a) The study of possible Exoplanets (Methods, Successes/Problems etc) 
+b) Study of novel new instruments to study nonlight based aspects of the Universe ( e.g 
+SNO neutrino observatory, LISA and LIGO interferometer for gravity waves etc, )  
+c) The multiverse and parallel universes ( Branes) 
+d) The James Webb telescope (successor to the Hubble Space telescope) 
+e) Black holes. E.g. Stephen Hawkings , Roger Penrose etc contributions to our 
+understanding of Black holes 
+
+===== PAGE 12 =====
+ 
+f) Modified Newtonian Dynamics (MOND). It’s strengths and weaknesses. 
+g) String Theory and Superstrings. Successes and Failures 
+h) The problem with vacuum energy 
+i) The Large Hadron Collider. Its experiments, successes (e.g Higgs Boson) and how it helps 
+us understand the early moments of the Universe. 
+j) The Euclid space telescope. For study of dark matter and Energy.  
+k) The mission of “NASA's Artemis II” and new learnings from this adventure. 
+ 
+Final Project Proposal 
+Value: 10% 
+Due: end of Week 7 
+DESCRIPTION: 
+Proposals must include: 
+1. Your name, student number and course section 
+2. Tentative name for the project 
+3. Form of final product 
+4. Relevance of project to course 
+5. Preliminary sources of research or inspiration, or plan for development. 
+6. Reason for being allowed to do the project 
+This proposal will need to be sufficiently persuasive in order to ensure that the topic is accepted. A 
+proposal must be approved before a final project can be submitted. 
+LENGTH: 
+Project proposals will vary in length depending on the amount of thought learners have given to their 
+project. As a minimum, learner s should aim for a length of 200 words, or one page, for their 
+proposals. 
+SUBMISSION: 
+The proposal will be submitted through the Assignment link in Brightspace. 
+FEEDBACK: 
+the instructor will provide comments about the proposal, suggestions for developing the project, and 
+in some cases conditions or additional requirements for the project. Learners should be sure to consult 
+these comments, as meeting these requirements will be considered in the evaluation of the final 
+project. 
+If the proposal is not accepted, the instructor will explain why and provide suggestions for what would 
+make it acceptable, or alternatives. The learner will then submit a new proposal, and we will go back 
+and forth until all are satisfied. 
+
+===== PAGE 13 =====
+ 
+ 
+ 
+Final Project 
+Value: 36% 
+Due:End of 14th week ( Friday) , or earlier if possible 
+DESCRIPTION: 
+Learners will submit the completed project as outlined in the proposal submitted earlier in the 
+semester. Length, etc. will vary depending on the type of project. 
+The submission should be accompanied by a Brief Explanatory  Statement  (one solid paragraph should 
+suffice), connecting your work to the themes we have studied in the course. 
+SUBMISSION: 
+The project will be submitted through the link on Brightspace. Late submissions will be automatically 
+noted and penalized one grade division per day. It is simply not possible to accept projects more than 
+a week after the due date because the term will be over. 
+ 
+EVALUATION: 
+Methods of evaluation will vary with the type of project, and the instructor will communicate  
+criteria in the feedback for the proposal. Items such as Content/ Quality, Grammar/Presentation, 
+Effort put in, References will be assessed. 
+ 
+Documentation 
+What is Documentation? 
+When you incorporate information from other sources into your work, you must  clearly attribute 
+that information to its source . Failure to do so can constitute an act of plagiarism. In academic 
+writing, we generally incorporate information  from outside sources using one or a combination of 
+three techniques: 
+1) Quotation 
+• The words of the source are reproduced directly in the text and indicated with quotation 
+marks. 
+ e.g. The immersive reality in Vinge's story is a kind of "electronically created, shared 
+hallucination" (Goldstein 2). 
+2) Citation without Quotation 
+• Details are taken from the source, but the words are not quoted directly. 
+ e.g. The emitter would cost 5-10 million dollars US (Goldstein 5), but is not beyond the 
+capabilities of today's technology. 
+3) Paraphrasing 
+• The gist of the source's ideas are presented, but in your own words. 
+ e.g. The immersive reality in Vinge's story is electronically created and it operates 
+
+===== PAGE 14 =====
+ 
+like a common hallucination (Goldstein 2). 
+• Note: Paraphrasing can be tricky, because it makes it difficult to judge where your own 
+ideas end and another's begin. When in doubt, it is always best to quote your source 
+directly to remove any ambiguity. 
+Finally, these citations in your text will point to a list of references at the end of your assignment, 
+called either a 'bibliography,' 'works cited list,' or a 'reference list,' depending on which style you are 
+following. 
+ e.g. Works Cited 
+ 
+Asimov, Isaac. I, Robot. New York: Ballantine, 1977. 
+Goldstein, Harry. "Mike Villa's World." 4 Jul 2004. IEEE Spectrum Magazine. 31 Aug 2009 
+<http://www.spectrum.ieee.org/WEBONLY/publicfeature/jul04/0704mvw.ht ml> 
+ 
+Choosing a Citation Style 
+For this course, you may use any of the major citation styles. If you are already comfortable  with one, 
+use that. If all of this is new to you, choose the one that is used in disciplines that are closest to your 
+own: 
+• American Psychological Association (APA) style is most commonly used in the social 
+sciences. 
+• Modern Language Association (MLA) style is used in liberal arts and the humanities. 
+• The Chicago Manual of Style is used in history, anthropology, and the information 
+sciences. 
+You can find information on how to use each of these styles correctly at the sites collected in the folder 
+under Documentation in the Blackboard shell. 
+ 
+What is Plagiarism? 
+Algonquin College defines plagiarism  as follows: 
+Plagiarism, whether done deliberately or accidentally, is defined as presenting someone else's work, in 
+whole or in part, as one's own, and includes the verbal or written submission of another work (for 
+example, ideas, wording, code, graphics, music, and inventions) without crediting that source. This 
+includes all electronic sources (for example, the Internet, television, video, film, and recordings), all  
+print and written sources (for example, books, periodicals, lyrics, government publications, 
+promotional materials, and academic assignments), and all verbal sources (for example, conversations 
+and interviews). 
+Plagiarism constitutes an act of academic dishonesty, and carries serious consequences . All learners 
+must read the College plagiarism  policy (AA48) and signal their acceptance of the Attestation of 
+Academic Integrity before any assignments will be accepted for grading. Any instances of plagiarism, 
+or any other form of academic dishonesty will be prosecuted according to the College policies ( be 
+warned: your instructor is alert). 
+
+===== PAGE 15 =====
+ 
+ 
+Plagiarism Extra Note…Generative AI (such as ChatGPT and other AI’s) is the cause of considerable 
+discussion at present. Such software can help learners create new illustrations and potentially useful 
+content; however, it must be credited where used. 
+If learners do choose to use Generative AI software for their work, they Must declare this in the 
+document/presentation. If credit is not noted in the learner work and the professor discovers (by 
+various means) that this has occurred, then the work will be assigned to a zero mark. 
+Please also be aware that software such as ChatGPT will generate references but,  quite 
+often, these references are not correct & have no link to the text content. 
+Your professor will be checking your references and, should this occur ,you will be given 
+zero on the assignment. 

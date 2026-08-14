@@ -246,67 +246,67 @@ function initTransitVisual() {
     const sourceX = width * .5;
     const sourceY = height * .5;
     const scale = Math.min(width, height);
-    const visibility = .16 + (1 - overlap) * .84;
-    const intensity = Math.min(1.2, visibility * .9 + edgeBoost * .38);
+    const visibility = .18 + (1 - overlap) * .82;
+    const intensity = Math.min(1.3, visibility * 1.08 + edgeBoost * .44);
 
     context.save();
     context.globalCompositeOperation = "screen";
 
-    drawRadial(sourceX, sourceY, scale * .34, [
-      [0, `rgba(255,255,245,${.42 * intensity})`],
-      [.07, `rgba(255,238,181,${.27 * intensity})`],
-      [.24, `rgba(255,191,75,${.13 * intensity})`],
-      [.56, `rgba(217,112,25,${.045 * intensity})`],
+    drawRadial(sourceX, sourceY, scale * .52, [
+      [0, `rgba(255,255,251,${.52 * intensity})`],
+      [.06, `rgba(255,247,210,${.36 * intensity})`],
+      [.22, `rgba(255,195,78,${.19 * intensity})`],
+      [.54, `rgba(221,104,18,${.07 * intensity})`],
       [1, "rgba(0,0,0,0)"],
     ]);
 
-    drawRadial(sourceX, sourceY, scale * .065, [
-      [0, `rgba(255,255,255,${.72 * intensity})`],
-      [.12, `rgba(255,249,219,${.5 * intensity})`],
-      [.5, `rgba(255,206,99,${.13 * intensity})`],
+    drawRadial(sourceX, sourceY, scale * .095, [
+      [0, `rgba(255,255,255,${.86 * intensity})`],
+      [.1, `rgba(255,253,232,${.62 * intensity})`],
+      [.48, `rgba(255,207,96,${.2 * intensity})`],
       [1, "rgba(0,0,0,0)"],
     ]);
 
     context.save();
-    context.filter = `blur(${Math.max(6, scale * .021)}px)`;
-    const broadStreak = context.createLinearGradient(width * .02, sourceY, width * .98, sourceY);
+    context.filter = `blur(${Math.max(8, scale * .03)}px)`;
+    const broadStreak = context.createLinearGradient(0, sourceY, width, sourceY);
     broadStreak.addColorStop(0, "rgba(0,0,0,0)");
-    broadStreak.addColorStop(.18, `rgba(225,141,35,${.025 * intensity})`);
-    broadStreak.addColorStop(.34, `rgba(239,157,48,${.09 * intensity})`);
-    broadStreak.addColorStop(.5, `rgba(255,226,151,${.32 * intensity})`);
-    broadStreak.addColorStop(.66, `rgba(239,157,48,${.09 * intensity})`);
-    broadStreak.addColorStop(.82, `rgba(225,141,35,${.025 * intensity})`);
+    broadStreak.addColorStop(.12, `rgba(225,141,35,${.06 * intensity})`);
+    broadStreak.addColorStop(.3, `rgba(245,165,51,${.2 * intensity})`);
+    broadStreak.addColorStop(.5, `rgba(255,235,174,${.62 * intensity})`);
+    broadStreak.addColorStop(.7, `rgba(245,165,51,${.2 * intensity})`);
+    broadStreak.addColorStop(.88, `rgba(225,141,35,${.06 * intensity})`);
     broadStreak.addColorStop(1, "rgba(0,0,0,0)");
     context.fillStyle = broadStreak;
-    context.fillRect(width * .02, sourceY - scale * .032, width * .96, scale * .064);
+    context.fillRect(0, sourceY - scale * .048, width, scale * .096);
     context.restore();
 
-    const streak = context.createLinearGradient(width * .05, sourceY, width * .95, sourceY);
+    const streak = context.createLinearGradient(0, sourceY, width, sourceY);
     streak.addColorStop(0, "rgba(0,0,0,0)");
-    streak.addColorStop(.18, `rgba(218,135,31,${.035 * intensity})`);
-    streak.addColorStop(.32, `rgba(230,150,42,${.13 * intensity})`);
-    streak.addColorStop(.43, `rgba(255,205,101,${.32 * intensity})`);
-    streak.addColorStop(.46, `rgba(255,221,134,${.4 * intensity})`);
+    streak.addColorStop(.18, `rgba(218,135,31,${.08 * intensity})`);
+    streak.addColorStop(.32, `rgba(230,150,42,${.24 * intensity})`);
+    streak.addColorStop(.43, `rgba(255,205,101,${.5 * intensity})`);
+    streak.addColorStop(.46, `rgba(255,221,134,${.65 * intensity})`);
     streak.addColorStop(.495, `rgba(255,252,225,${.72 * intensity})`);
     streak.addColorStop(.5, `rgba(255,255,255,${.94 * intensity})`);
     streak.addColorStop(.505, `rgba(255,252,225,${.72 * intensity})`);
-    streak.addColorStop(.54, `rgba(255,221,134,${.4 * intensity})`);
-    streak.addColorStop(.57, `rgba(255,205,101,${.32 * intensity})`);
-    streak.addColorStop(.68, `rgba(230,150,42,${.13 * intensity})`);
-    streak.addColorStop(.82, `rgba(218,135,31,${.035 * intensity})`);
+    streak.addColorStop(.54, `rgba(255,221,134,${.65 * intensity})`);
+    streak.addColorStop(.57, `rgba(255,205,101,${.5 * intensity})`);
+    streak.addColorStop(.68, `rgba(230,150,42,${.24 * intensity})`);
+    streak.addColorStop(.82, `rgba(218,135,31,${.08 * intensity})`);
     streak.addColorStop(1, "rgba(0,0,0,0)");
     context.save();
-    context.shadowBlur = Math.max(8, scale * .018);
-    context.shadowColor = `rgba(255,190,72,${.46 * intensity})`;
+    context.shadowBlur = Math.max(12, scale * .03);
+    context.shadowColor = `rgba(255,194,78,${.62 * intensity})`;
     context.fillStyle = streak;
-    context.fillRect(width * .05, sourceY - 1.05, width * .9, 2.1);
+    context.fillRect(0, sourceY - 1.8, width, 3.6);
     context.restore();
 
     const chromaticStreak = context.createLinearGradient(width * .16, sourceY, width * .84, sourceY);
     chromaticStreak.addColorStop(0, "rgba(0,0,0,0)");
-    chromaticStreak.addColorStop(.42, `rgba(119,104,255,${.13 * intensity})`);
-    chromaticStreak.addColorStop(.5, `rgba(255,235,179,${.24 * intensity})`);
-    chromaticStreak.addColorStop(.58, `rgba(255,158,65,${.11 * intensity})`);
+    chromaticStreak.addColorStop(.42, `rgba(119,104,255,${.2 * intensity})`);
+    chromaticStreak.addColorStop(.5, `rgba(255,235,179,${.34 * intensity})`);
+    chromaticStreak.addColorStop(.58, `rgba(255,158,65,${.18 * intensity})`);
     chromaticStreak.addColorStop(1, "rgba(0,0,0,0)");
     context.fillStyle = chromaticStreak;
     context.fillRect(width * .16, sourceY + 1.65, width * .68, .8);
@@ -320,14 +320,14 @@ function initTransitVisual() {
     context.fillStyle = glint;
     context.fillRect(sourceX - .65, sourceY - scale * .12, 1.3, scale * .24);
 
-    const axisX = width * -.095;
-    const axisY = height * .07;
+    const axisX = width * -.12;
+    const axisY = height * .085;
     [
-      { distance: -.85, radius: .014, color: [255, 232, 164], alpha: .17, ring: false },
-      { distance: 1.35, radius: .028, color: [255, 192, 79], alpha: .14, ring: false },
-      { distance: 2.45, radius: .052, color: [129, 111, 255], alpha: .13, ring: true },
-      { distance: 3.65, radius: .034, color: [255, 180, 62], alpha: .12, ring: true },
-      { distance: 4.55, radius: .017, color: [255, 235, 183], alpha: .14, ring: false },
+      { distance: -.9, radius: .022, color: [255, 232, 164], alpha: .22, ring: false },
+      { distance: 1.25, radius: .044, color: [255, 192, 79], alpha: .2, ring: false },
+      { distance: 2.35, radius: .074, color: [129, 111, 255], alpha: .18, ring: true },
+      { distance: 3.45, radius: .052, color: [255, 180, 62], alpha: .18, ring: true },
+      { distance: 4.35, radius: .027, color: [255, 235, 183], alpha: .2, ring: false },
     ].forEach((ghost) => {
       const x = sourceX + axisX * ghost.distance;
       const y = sourceY + axisY * ghost.distance;
