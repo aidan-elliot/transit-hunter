@@ -38,6 +38,23 @@ const elements = {
 
 let currentIndex = 0;
 let selectedGuess = null;
+const mobileViewport = window.matchMedia("(max-width: 700px)");
+const reducedMotionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function moveMobileStageIntoView(target, focusTarget, block = "end") {
+  if (!mobileViewport.matches || !target) return;
+  window.requestAnimationFrame(() => {
+    target.scrollIntoView({
+      behavior: reducedMotionPreference.matches ? "auto" : "smooth",
+      block,
+      inline: "nearest",
+    });
+    window.setTimeout(
+      () => focusTarget?.focus({ preventScroll: true }),
+      reducedMotionPreference.matches ? 0 : 320,
+    );
+  });
+}
 
 function cropCurve(image, row, column) {
   const x = column === "global" ? 100 : 892;
@@ -129,6 +146,7 @@ function showModel() {
   elements.revealStage.classList.remove("is-entering");
   void elements.revealStage.offsetWidth;
   elements.revealStage.classList.add("is-entering");
+  moveMobileStageIntoView(elements.revealStage, elements.revealAnswer);
 }
 
 function showCatalogue() {
@@ -147,6 +165,7 @@ function showCatalogue() {
   elements.verdictGrid.classList.add("has-catalogue");
   elements.revealAnswer.hidden = true;
   elements.nextCase.hidden = false;
+  moveMobileStageIntoView(elements.revealStage, elements.nextCase);
 }
 
 elements.viewDemo.addEventListener("click", () => {
@@ -170,6 +189,7 @@ elements.nextCase.addEventListener("click", () => {
     currentIndex = (currentIndex + 1) % cases.length;
     resetCase();
     elements.workspace.classList.remove("is-changing");
+    moveMobileStageIntoView(elements.workspace, elements.choices[0], "start");
   }, 280);
 });
 

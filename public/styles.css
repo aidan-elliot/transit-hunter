@@ -352,15 +352,64 @@ h1 span {
 
 @media (max-width: 700px) {
   html, body { overflow: hidden; }
-  .home-hero { display: block; min-height: 100svh; padding: 3rem 1.4rem 2rem; }
-  .home-copy { max-width: 34rem; }
-  h1 { font-size: clamp(3.65rem, 16vw, 5rem); margin: 0 0 1.5rem; }
-  .home-description { line-height: 1.6; max-width: 29rem; }
-  .home-actions { flex-wrap: wrap; max-width: 23rem; }
-  .primary-action { flex: 1 0 100%; }
-  .hero-visual { bottom: -4vw; opacity: .7; position: absolute; right: -19vw; width: 76vw; z-index: -1; }
-  .lens-flare-canvas { opacity: .78; }
-  .signal-card { display: none; }
+  .home-hero {
+    align-content: start;
+    display: grid;
+    gap: 0;
+    grid-template-areas:
+      "title"
+      "visual"
+      "description"
+      "actions";
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 100svh;
+    padding: max(2rem, env(safe-area-inset-top)) 1.25rem max(2rem, env(safe-area-inset-bottom));
+  }
+  .home-copy { display: contents; }
+  h1 {
+    font-size: clamp(3.75rem, 17.5vw, 5.2rem);
+    grid-area: title;
+    line-height: .8;
+    margin: 0;
+    max-width: 5.2ch;
+    position: relative;
+    z-index: 5;
+  }
+  .hero-visual {
+    grid-area: visual;
+    justify-self: center;
+    margin: -1.45rem 0 -1.1rem;
+    max-height: none;
+    opacity: 1;
+    position: relative;
+    right: auto;
+    width: min(105vw, 27rem);
+    z-index: 3;
+  }
+  .stellar-light { inset: 16%; }
+  .planet { height: 12%; width: 12%; }
+  .lens-flare-canvas { opacity: .86; }
+  .signal-card { bottom: 5%; left: 3%; width: 64%; }
+  .home-description {
+    grid-area: description;
+    line-height: 1.58;
+    max-width: 34rem;
+    position: relative;
+    z-index: 5;
+  }
+  .home-actions {
+    display: grid;
+    gap: .6rem;
+    grid-area: actions;
+    grid-template-columns: minmax(0, 1fr) 3.25rem;
+    margin-top: 1.5rem;
+    max-width: 34rem;
+    position: relative;
+    z-index: 5;
+  }
+  .primary-action { grid-column: 1 / -1; }
+  .home-actions .action-button { min-height: 3.45rem; }
+  .home-actions .icon-action { width: 3.25rem; }
   .project-section { padding: 4.5rem 1.4rem; }
   .project-intro { display: block; }
   .project-intro h2 { font-size: clamp(2.65rem, 13vw, 4.6rem); margin-bottom: 1.5rem; }
@@ -373,23 +422,76 @@ h1 span {
   .glossary > h3 { margin-bottom: 2rem; }
   .glossary-list { grid-template-columns: 1fr; }
   .glossary-list div:nth-child(even) { padding-left: 0; }
-  .demo-screen { overflow-y: auto; padding: 1rem; }
+  .demo-screen {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    padding: 0 1rem max(1rem, env(safe-area-inset-bottom));
+    scrollbar-width: none;
+  }
+  .demo-screen::-webkit-scrollbar { display: none; }
+  .demo-topline {
+    backdrop-filter: blur(16px);
+    background: linear-gradient(180deg, rgba(7,8,12,.98) 0 74%, rgba(7,8,12,0));
+    height: 3.55rem;
+    margin-inline: -1rem;
+    padding: 0 1rem .4rem;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
   .case-progress #source-status { display: none; }
   .case-progress span:last-child { border-left: 0; padding-left: 0; }
-  .demo-layout { display: block; height: auto; padding: 1.2rem 0 3rem; }
-  .demo-heading { margin-bottom: 1.25rem; }
-  .demo-heading h2 { font-size: clamp(2.6rem, 13vw, 4rem); margin: .85rem 0 1rem; }
-  .demo-heading > p:last-child { font-size: .75rem; }
-  .case-workspace { max-height: none; }
-  .curves { grid-template-columns: 1fr; }
+  .demo-layout { display: block; height: auto; padding: .55rem 0 0; }
+  .demo-heading { margin-bottom: 1.15rem; }
+  .demo-heading h2 { font-size: clamp(2.25rem, 11.5vw, 3.2rem); line-height: .92; margin: .55rem 0 .8rem; max-width: 9ch; }
+  .demo-heading > p:last-child { font-size: .71rem; line-height: 1.55; max-width: 31rem; }
+  .case-workspace { max-height: none; scroll-margin-top: 3.85rem; }
+  .case-identity { padding-bottom: .65rem; scroll-margin-top: 3.85rem; }
+  .case-identity strong { font-size: 1.25rem; }
+  .curves { gap: .75rem; grid-template-columns: 1fr; margin-top: .75rem; }
+  .curve-panel figcaption { margin-bottom: .35rem; }
+  .curve-frame { aspect-ratio: 3.15 / 1; }
+  .decision-stage,
+  .reveal-stage {
+    backdrop-filter: blur(18px);
+    background: rgba(10, 12, 17, .94);
+    border-top: 1px solid rgba(247,201,72,.3);
+    bottom: 0;
+    box-shadow: 0 -18px 42px rgba(0,0,0,.48);
+    margin: 1rem -1rem 0;
+    padding: .9rem 1rem max(.9rem, env(safe-area-inset-bottom));
+    position: sticky;
+    z-index: 15;
+  }
+  .decision-stage { align-items: stretch; gap: .7rem; }
+  .decision-stage > p { font-size: .72rem; }
   .decision-row { width: 100%; }
-  .decision-row button { flex: 1; justify-content: center; }
-  .verdict-grid,
-  .verdict-grid.has-catalogue { grid-template-columns: 1fr; }
-  .verdict { padding: 1rem 0; }
-  .verdict:first-child { padding-top: .15rem; }
-  .verdict + .verdict { border-left: 0; border-top: 1px solid var(--line); }
+  .decision-row button { flex: 1; justify-content: center; min-height: 3rem; padding-inline: .65rem; }
+  .verdict-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .verdict-grid.has-catalogue { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .verdict { padding: 0 .65rem; }
+  .verdict:first-child { padding-left: 0; }
+  .verdict + .verdict { border-left: 1px solid var(--line); border-top: 0; }
+  .verdict:last-child { padding-right: 0; }
+  .verdict p { font-size: .54rem; margin-bottom: .3rem; }
+  .verdict h3 { font-size: clamp(.78rem, 3.5vw, 1rem); line-height: 1.05; margin-bottom: .28rem; overflow: visible; text-overflow: clip; white-space: normal; }
+  .verdict > span { font-size: .52rem; line-height: 1.3; overflow: visible; text-overflow: clip; white-space: normal; }
   .catalogue-verdict { grid-column: auto; }
+  .reveal-actions { margin-top: .8rem; }
+  .reveal-button,
+  .next-button { justify-content: space-between; min-height: 3rem; width: 100%; }
+}
+
+@media (max-width: 370px) {
+  .home-hero { padding-inline: 1rem; }
+  .hero-visual { margin-top: -1rem; width: 108vw; }
+  .home-description { font-size: .86rem; }
+  .demo-screen { padding-inline: .8rem; }
+  .demo-topline,
+  .decision-stage,
+  .reveal-stage { margin-inline: -.8rem; padding-inline: .8rem; }
+  .demo-heading h2 { font-size: 2.25rem; }
+  .verdict { padding-inline: .45rem; }
 }
 
 @media (max-height: 690px) and (min-width: 701px) {
