@@ -3,61 +3,137 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="An interactive demonstration of TESS transit-candidate vetting." />
-    <title>Transit Hunter — Candidate vetting demo</title>
+    <meta name="description" content="Transit Hunter: an interactive TESS candidate-vetting experiment." />
+    <meta name="theme-color" content="#050814" />
+    <title>Transit Hunter | TESS candidate vetting</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <header class="site-header">
-      <a class="wordmark" href="#top" aria-label="Transit Hunter home">TRANSIT<br />HUNTER</a>
-      <p class="header-note">An interactive look at TESS candidate vetting</p>
-      <a class="header-link" href="https://github.com/aidan-elliot/transit-hunter" target="_blank" rel="noreferrer">View the research repository <span aria-hidden="true">↗</span></a>
-    </header>
-    <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
-        <p class="eyebrow">PHY4000 · live demonstration</p>
-        <h1 id="hero-title">Could you spot<br />a planet’s shadow?</h1>
-        <p class="hero-copy">Inspect an actual, held-out TESS light-curve pair. Make a call before seeing how the two-stage classifier—and the frozen catalogue—resolved it.</p>
-        <a class="start-link" href="#lab">Try a difficult case <span aria-hidden="true">↓</span></a>
+    <canvas id="starfield" aria-hidden="true"></canvas>
+    <div class="ambient-glow ambient-glow-one" aria-hidden="true"></div>
+    <div class="ambient-glow ambient-glow-two" aria-hidden="true"></div>
+
+    <main class="experience">
+      <section class="screen home-screen is-active" id="home-screen" aria-labelledby="home-title">
+        <div class="home-copy">
+          <div class="project-kicker"><span></span> PHY4000 research project</div>
+          <h1 id="home-title">Hunting for<br /><span>shadows.</span></h1>
+          <p class="home-description">
+            A two-stage neural network was trained to vet TESS planet candidates from folded light curves, then tested on unseen observations from a later catalogue snapshot.
+          </p>
+
+          <div class="home-actions" aria-label="Project links">
+            <button class="action-button primary-action" id="view-demo" type="button">
+              <span>View demo</span>
+              <span class="button-icon" aria-hidden="true">&#8594;</span>
+            </button>
+            <a class="action-button" href="https://github.com/aidan-elliot/transit-hunter/blob/main/reports/results_summary.md" target="_blank" rel="noreferrer">
+              <span>Full report</span>
+              <span class="button-icon" aria-hidden="true">&#8599;</span>
+            </a>
+            <a class="action-button icon-action" href="https://github.com/aidan-elliot/transit-hunter" target="_blank" rel="noreferrer" aria-label="Open the GitHub repository">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .7a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2.2c-3.4.7-4.1-1.4-4.1-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6a4.7 4.7 0 0 1 1.2-3.2 4.4 4.4 0 0 1 .1-3.2s1-.3 3.2 1.2a11 11 0 0 1 5.9 0C17.1 4.3 18 4.6 18 4.6a4.4 4.4 0 0 1 .1 3.2 4.7 4.7 0 0 1 1.2 3.2c0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .7Z"/></svg>
+            </a>
+          </div>
+
+          <div class="project-result" aria-label="Headline experiment result">
+            <span class="result-value">87 <b>&#8594;</b> 70</span>
+            <span class="result-copy">accepted false positives<br />after diagnostic vetting</span>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Animated illustration of a planet transiting a star">
+          <div class="orbit orbit-outer" aria-hidden="true"></div>
+          <div class="orbit orbit-inner" aria-hidden="true"></div>
+          <div class="star" aria-hidden="true"><span></span></div>
+          <div class="planet" aria-hidden="true"><span></span></div>
+          <div class="signal-card">
+            <div class="signal-heading">
+              <span><i></i> Held-out TESS signal</span>
+              <span id="hero-toi">Loading sample</span>
+            </div>
+            <div class="signal-image-wrap">
+              <img id="hero-curve" src="./assets/error_gallery.png" alt="A real folded TESS light curve from the experiment" />
+              <span class="scan-line" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+
+        <p class="home-note">Candidate vetting experiment <span></span> 2026</p>
       </section>
-      <section class="lab" id="lab" aria-labelledby="lab-title">
-        <div class="section-heading">
-          <p class="eyebrow">Candidate review desk</p>
-          <h2 id="lab-title">Make your call</h2>
-          <p id="case-context" class="muted">A deterministic, outcome-stratified sample from the sealed temporal test set.</p>
+
+      <section class="screen demo-screen" id="demo-screen" aria-labelledby="demo-title" aria-hidden="true">
+        <div class="demo-topline">
+          <button class="back-button" id="back-home" type="button"><span aria-hidden="true">&#8592;</span> Overview</button>
+          <div class="case-progress">
+            <span id="source-status">Loading representative sample</span>
+            <span class="progress-divider"></span>
+            <span id="case-position">01 / 13</span>
+          </div>
         </div>
-        <div class="case-bar" aria-live="polite"><span id="case-id">TOI —</span><span id="source-status">Loading representative sample…</span><span id="case-position">Case 1 of 13</span></div>
-        <div class="curves" aria-label="Global and local folded light-curve views">
-          <figure class="curve-panel"><figcaption>Global view <span>201 phase bins</span></figcaption><div class="curve-crop"><img id="global-curve" src="./assets/error_gallery.png" alt="Global folded light curve for the current test case" /></div></figure>
-          <figure class="curve-panel"><figcaption>Local view <span>101 phase bins</span></figcaption><div class="curve-crop"><img id="local-curve" src="./assets/error_gallery.png" alt="Local folded light curve around the current candidate event" /></div></figure>
+
+        <div class="demo-layout">
+          <div class="demo-heading">
+            <p class="project-kicker"><span></span> Candidate review</p>
+            <h2 id="demo-title">Is there a planet<br />in this signal?</h2>
+            <p id="case-context">Inspect both phase-folded views, then make the call before the model and catalogue are revealed.</p>
+          </div>
+
+          <div class="case-workspace" id="case-workspace">
+            <div class="case-identity">
+              <span>Target of Interest</span>
+              <strong id="case-id">TOI -</strong>
+            </div>
+
+            <div class="curves" aria-label="Global and local folded light-curve views">
+              <figure class="curve-panel">
+                <figcaption><span>Global view</span><span>201 phase bins</span></figcaption>
+                <div class="curve-frame"><img id="global-curve" src="./assets/error_gallery.png" alt="Global folded light curve for the current candidate" /></div>
+              </figure>
+              <figure class="curve-panel">
+                <figcaption><span>Transit window</span><span>101 phase bins</span></figcaption>
+                <div class="curve-frame"><img id="local-curve" src="./assets/error_gallery.png" alt="Local folded light curve around the candidate event" /></div>
+              </figure>
+            </div>
+
+            <div class="decision-stage" id="human-panel">
+              <p>What would you classify it as?</p>
+              <div class="decision-row" role="group" aria-label="Classify the candidate">
+                <button type="button" data-guess="planet"><span class="choice-dot"></span> Planet candidate</button>
+                <button type="button" data-guess="not-planet"><span class="choice-dot"></span> False positive</button>
+              </div>
+            </div>
+
+            <div class="reveal-stage" id="reveal-stage" hidden aria-live="polite">
+              <div class="verdict-grid">
+                <section class="verdict visitor-verdict" id="visitor-verdict">
+                  <p>Your call</p>
+                  <h3 id="visitor-decision">-</h3>
+                  <span id="visitor-detail">Locked in</span>
+                </section>
+                <section class="verdict model-verdict">
+                  <p>Model's call</p>
+                  <h3 id="model-decision">-</h3>
+                  <span id="model-detail">-</span>
+                </section>
+                <section class="verdict catalogue-verdict" id="catalogue-verdict" hidden>
+                  <p>Catalogue outcome</p>
+                  <h3 id="catalogue-decision">-</h3>
+                  <span id="catalogue-detail">-</span>
+                </section>
+              </div>
+              <div class="reveal-actions">
+                <button class="reveal-button" id="reveal-answer" type="button">Reveal answer <span aria-hidden="true">&#8594;</span></button>
+                <button class="next-button" id="next-case" type="button" hidden>Review another case <span aria-hidden="true">&#8594;</span></button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="callout" id="human-panel">
-          <p class="prompt">Would you promote this candidate for follow-up?</p>
-          <div class="decision-row" role="group" aria-label="Your candidate assessment"><button type="button" data-guess="planet">Likely a planet</button><button type="button" data-guess="not-planet">Likely not a planet</button><button type="button" data-guess="unsure">Not sure</button></div>
-        </div>
-        <div class="reveal-grid" id="reveal-grid" hidden>
-          <section class="verdict visitor-verdict" id="visitor-verdict" aria-live="polite"><p class="verdict-label">Your call</p><h3 id="visitor-decision">—</h3><p id="visitor-detail" class="muted"></p></section>
-          <section class="verdict model-verdict" aria-live="polite"><p class="verdict-label">The model’s call</p><h3 id="model-decision">—</h3><p id="model-detail" class="muted"></p></section>
-          <section class="verdict catalogue-verdict" id="catalogue-verdict" hidden aria-live="polite"><p class="verdict-label">Frozen catalogue outcome</p><h3 id="catalogue-decision">—</h3><p id="catalogue-detail" class="muted"></p></section>
-        </div>
-        <div class="next-row" id="next-row" hidden><button type="button" class="reveal-button" id="reveal-answer">Reveal the catalogue outcome</button><button type="button" class="next-button" id="next-case" hidden>Review another case <span aria-hidden="true">→</span></button></div>
-      </section>
-      <section class="evidence" aria-labelledby="evidence-title">
-        <div><p class="eyebrow">The full evaluation, not a game score</p><h2 id="evidence-title">What the complete sealed test set showed</h2></div>
-        <div class="metric-grid">
-          <article><p class="metric">87 <span>→</span> 70</p><p>accepted false positives after the diagnostic second stage</p></article>
-          <article><p class="metric">85.1% <span>→</span> 71.6%</p><p>test recall; the false-positive gain came with a real cost</p></article>
-          <article><p class="metric">−0.118</p><p>false-positive-rate difference, with a 95% grouped-bootstrap interval of −0.184 to −0.053</p></article>
-        </div>
-        <p class="evidence-note" id="evidence-note">These 13 real curve pairs mirror the full Stage 2 test outcome mix: 8 correct predictions and 5 errors.</p>
-      </section>
-      <section class="about" aria-labelledby="about-title">
-        <p class="eyebrow">About this demonstration</p><h2 id="about-title">Candidate vetting is not planet discovery.</h2>
-        <p>This site uses fixed outputs from the reproducible experiment: 13 representative held-out light-curve pairs, their recorded model scores, and their frozen NASA Exoplanet Archive dispositions. It does not query a live catalogue or claim that an individual score confirms a planet.</p>
-        <div class="resource-links"><a href="https://github.com/aidan-elliot/transit-hunter/blob/main/reports/results_summary.md" target="_blank" rel="noreferrer">Read the results summary <span aria-hidden="true">↗</span></a><a href="https://github.com/aidan-elliot/transit-hunter" target="_blank" rel="noreferrer">Explore the full repository <span aria-hidden="true">↗</span></a></div>
+
+        <p class="demo-disclaimer">Fixed experiment outputs. A classifier score is not confirmation of a planet.</p>
       </section>
     </main>
-    <footer>Transit Hunter · TESS TOI candidate-vetting experiment · 2026</footer>
+
     <script src="./app.js"></script>
   </body>
 </html>

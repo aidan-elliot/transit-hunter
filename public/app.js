@@ -9,8 +9,35 @@ let cases = [
 
 const thresholds = { stage1: 0.345, stage2: 0.343 };
 const elements = {
-  caseId: document.querySelector("#case-id"), casePosition: document.querySelector("#case-position"), context: document.querySelector("#case-context"), evidenceNote: document.querySelector("#evidence-note"), source: document.querySelector("#source-status"), global: document.querySelector("#global-curve"), local: document.querySelector("#local-curve"), human: document.querySelector("#human-panel"), choices: document.querySelectorAll("[data-guess]"), revealGrid: document.querySelector("#reveal-grid"), visitor: document.querySelector("#visitor-verdict"), visitorDecision: document.querySelector("#visitor-decision"), visitorDetail: document.querySelector("#visitor-detail"), modelDecision: document.querySelector("#model-decision"), modelDetail: document.querySelector("#model-detail"), catalogue: document.querySelector("#catalogue-verdict"), catalogueDecision: document.querySelector("#catalogue-decision"), catalogueDetail: document.querySelector("#catalogue-detail"), nextRow: document.querySelector("#next-row"), revealAnswer: document.querySelector("#reveal-answer"), nextCase: document.querySelector("#next-case"),
+  home: document.querySelector("#home-screen"),
+  demo: document.querySelector("#demo-screen"),
+  viewDemo: document.querySelector("#view-demo"),
+  backHome: document.querySelector("#back-home"),
+  workspace: document.querySelector("#case-workspace"),
+  caseId: document.querySelector("#case-id"),
+  casePosition: document.querySelector("#case-position"),
+  context: document.querySelector("#case-context"),
+  source: document.querySelector("#source-status"),
+  global: document.querySelector("#global-curve"),
+  local: document.querySelector("#local-curve"),
+  heroCurve: document.querySelector("#hero-curve"),
+  heroToi: document.querySelector("#hero-toi"),
+  human: document.querySelector("#human-panel"),
+  choices: document.querySelectorAll("[data-guess]"),
+  revealStage: document.querySelector("#reveal-stage"),
+  verdictGrid: document.querySelector(".verdict-grid"),
+  visitor: document.querySelector("#visitor-verdict"),
+  visitorDecision: document.querySelector("#visitor-decision"),
+  visitorDetail: document.querySelector("#visitor-detail"),
+  modelDecision: document.querySelector("#model-decision"),
+  modelDetail: document.querySelector("#model-detail"),
+  catalogue: document.querySelector("#catalogue-verdict"),
+  catalogueDecision: document.querySelector("#catalogue-decision"),
+  catalogueDetail: document.querySelector("#catalogue-detail"),
+  revealAnswer: document.querySelector("#reveal-answer"),
+  nextCase: document.querySelector("#next-case"),
 };
+
 let currentIndex = 0;
 let selectedGuess = null;
 
@@ -18,16 +45,13 @@ function cropCurve(image, row, column) {
   const x = column === "global" ? 100 : 892;
   const y = 58 + row * 400;
   image.style.width = "231.884%";
+  image.style.height = "auto";
   image.style.left = `${(-x / 690) * 100}%`;
   image.style.top = "0";
   image.style.transform = `translateY(${(-y / 2400) * 100}%)`;
 }
-function renderCurve(image, values, row, column) {
-  if (!values) {
-    image.src = "./assets/error_gallery.png";
-    cropCurve(image, row, column);
-    return;
-  }
+
+function curveDataUri(values) {
   const minimum = Math.min(...values);
   const maximum = Math.max(...values);
   const padding = Math.max((maximum - minimum) * 0.12, 0.00001);
@@ -38,81 +62,203 @@ function renderCurve(image, values, row, column) {
     const y = 190 - ((value - low) / (high - low)) * 158;
     return `${index ? "L" : "M"}${x.toFixed(2)} ${y.toFixed(2)}`;
   }).join(" ");
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 220" role="img" aria-label="Folded relative-flux light curve"><rect width="660" height="220" fill="white"/><g stroke="#c8c9c5" stroke-width="1"><path d="M28 32H632M28 111H632M28 190H632"/></g><path d="M28 32V190H632" fill="none" stroke="#172343" stroke-width="1.25"/><path d="${path}" fill="none" stroke="#d65a47" stroke-width="2.2"/></svg>`;
-  image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 220" role="img" aria-label="Folded relative-flux light curve"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#147eab"/><stop offset="1" stop-color="#6757c9"/></linearGradient></defs><rect width="660" height="220" fill="#f7f9fc"/><g stroke="#dce2eb" stroke-width="1"><path d="M28 32H632M28 111H632M28 190H632"/></g><path d="M28 32V190H632" fill="none" stroke="#72809a" stroke-width="1"/><path d="${path}" fill="none" stroke="url(#g)" stroke-width="2.6"/></svg>`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
+
+function renderCurve(image, values, row, column) {
+  if (!values) {
+    image.src = "./assets/error_gallery.png";
+    cropCurve(image, row, column);
+    return;
+  }
+  image.src = curveDataUri(values);
   image.style.width = "100%";
+  image.style.height = "100%";
   image.style.left = "0";
   image.style.top = "0";
   image.style.transform = "none";
 }
-function modelCall(value) { return value >= thresholds.stage2 ? "Likely a planet" : "Likely not a planet"; }
+
+function modelCall(value) {
+  return value >= thresholds.stage2 ? "Planet candidate" : "False positive";
+}
+
+function showScreen(name) {
+  const showDemo = name === "demo";
+  elements.home.classList.toggle("is-active", !showDemo);
+  elements.demo.classList.toggle("is-active", showDemo);
+  elements.home.setAttribute("aria-hidden", String(showDemo));
+  elements.demo.setAttribute("aria-hidden", String(!showDemo));
+  if (showDemo) {
+    window.setTimeout(() => elements.choices[0].focus({ preventScroll: true }), 650);
+  } else {
+    window.setTimeout(() => elements.viewDemo.focus({ preventScroll: true }), 650);
+  }
+}
+
 function resetCase() {
-  const item = cases[currentIndex]; selectedGuess = null;
+  const item = cases[currentIndex];
+  selectedGuess = null;
   elements.caseId.textContent = `TOI ${item.toi}`;
-  elements.casePosition.textContent = `Case ${currentIndex + 1} of ${cases.length}`;
+  elements.casePosition.textContent = `${String(currentIndex + 1).padStart(2, "0")} / ${String(cases.length).padStart(2, "0")}`;
   renderCurve(elements.global, item.globalView, item.row, "global");
   renderCurve(elements.local, item.localView, item.row, "local");
-  elements.choices.forEach((button) => { button.classList.remove("selected"); button.disabled = false; });
-  elements.human.classList.remove("correct-guess", "incorrect-guess");
+  elements.choices.forEach((button) => {
+    button.classList.remove("selected");
+    button.disabled = false;
+  });
+  elements.human.hidden = false;
   elements.visitor.classList.remove("correct-guess", "incorrect-guess");
-  elements.human.hidden = false; elements.revealGrid.hidden = true; elements.catalogue.hidden = true; elements.nextRow.hidden = true; elements.nextCase.hidden = true; elements.revealAnswer.hidden = false;
+  elements.revealStage.hidden = true;
+  elements.revealStage.classList.remove("is-entering");
+  elements.catalogue.hidden = true;
+  elements.verdictGrid.classList.remove("has-catalogue");
+  elements.nextCase.hidden = true;
+  elements.revealAnswer.hidden = false;
 }
+
 function showModel() {
-  const item = cases[currentIndex]; const stage1Call = item.stage1 >= thresholds.stage1 ? "promotes" : "rejects";
-  elements.visitorDecision.textContent = selectedGuess === "planet" ? "Likely a planet" : selectedGuess === "not-planet" ? "Likely not a planet" : "Not sure";
-  elements.visitorDetail.textContent = "Your call is locked in. The catalogue outcome stays hidden for now.";
+  const item = cases[currentIndex];
+  const stage1Call = item.stage1 >= thresholds.stage1 ? "promoted" : "rejected";
+  elements.visitorDecision.textContent = selectedGuess === "planet" ? "Planet candidate" : "False positive";
+  elements.visitorDetail.textContent = "Locked in - answer hidden";
   elements.modelDecision.textContent = modelCall(item.stage2);
-  elements.modelDetail.textContent = `Stage 1 ${stage1Call} this candidate (score ${item.stage1.toFixed(3)}). Stage 2 score: ${item.stage2.toFixed(3)}.`;
-  elements.revealGrid.hidden = false; elements.nextRow.hidden = false;
+  elements.modelDetail.textContent = `Stage 1 ${stage1Call} | Stage 2 ${item.stage2.toFixed(3)}`;
+  elements.human.hidden = true;
+  elements.revealStage.hidden = false;
+  elements.revealStage.classList.remove("is-entering");
+  void elements.revealStage.offsetWidth;
+  elements.revealStage.classList.add("is-entering");
 }
+
 function showCatalogue() {
-  const item = cases[currentIndex]; const isPlanet = item.label === "CP";
+  const item = cases[currentIndex];
+  const isPlanet = item.label === "CP";
+  const modelIsPlanet = item.stage2 >= thresholds.stage2;
   const humanCorrect = (selectedGuess === "planet" && isPlanet) || (selectedGuess === "not-planet" && !isPlanet);
-  if (selectedGuess === "unsure") {
-    elements.visitorDecision.textContent = "No call made";
-    elements.visitorDetail.textContent = "This was a sensible difficult-case choice. See the frozen catalogue outcome alongside the model's result.";
-  } else if (humanCorrect) {
-    elements.visitorDecision.textContent = "Correct — good call";
-    elements.visitorDetail.textContent = "You identified this candidate’s catalogue outcome from the curve pair.";
-    elements.human.classList.add("correct-guess"); elements.visitor.classList.add("correct-guess");
-  } else {
-    elements.visitorDecision.textContent = "Not this time";
-    elements.visitorDetail.textContent = "This is a subtle case; compare the curve pair with the catalogue result.";
-    elements.human.classList.add("incorrect-guess"); elements.visitor.classList.add("incorrect-guess");
-  }
+  const modelCorrect = modelIsPlanet === isPlanet;
+
+  elements.visitor.classList.add(humanCorrect ? "correct-guess" : "incorrect-guess");
+  elements.visitorDecision.textContent = humanCorrect ? "Correct - good call" : "Not this time";
+  elements.visitorDetail.textContent = humanCorrect ? "Your classification matches the catalogue" : "Your classification differs from the catalogue";
   elements.catalogueDecision.textContent = isPlanet ? "Confirmed planet" : "False positive";
-  elements.catalogueDetail.textContent = "This deliberately selected hard case was also misclassified by the two-stage model.";
-  elements.catalogue.hidden = false; elements.revealAnswer.hidden = true; elements.nextCase.hidden = false;
+  elements.catalogueDetail.textContent = modelCorrect ? "The model also classified this case correctly" : "The model misclassified this case";
+  elements.catalogue.hidden = false;
+  elements.verdictGrid.classList.add("has-catalogue");
+  elements.revealAnswer.hidden = true;
+  elements.nextCase.hidden = false;
 }
+
+elements.viewDemo.addEventListener("click", () => {
+  elements.demo.scrollTop = 0;
+  resetCase();
+  showScreen("demo");
+});
+elements.backHome.addEventListener("click", () => showScreen("home"));
 elements.choices.forEach((button) => button.addEventListener("click", () => {
   selectedGuess = button.dataset.guess;
-  elements.choices.forEach((item) => { item.classList.toggle("selected", item === button); item.disabled = true; }); showModel();
+  elements.choices.forEach((item) => {
+    item.classList.toggle("selected", item === button);
+    item.disabled = true;
+  });
+  showModel();
 }));
 elements.revealAnswer.addEventListener("click", showCatalogue);
-elements.nextCase.addEventListener("click", () => { currentIndex = (currentIndex + 1) % cases.length; resetCase(); document.querySelector("#lab").scrollIntoView({ behavior: "smooth", block: "start" }); });
-resetCase();
+elements.nextCase.addEventListener("click", () => {
+  elements.workspace.classList.add("is-changing");
+  window.setTimeout(() => {
+    currentIndex = (currentIndex + 1) % cases.length;
+    resetCase();
+    elements.workspace.classList.remove("is-changing");
+  }, 280);
+});
+
+function updateHeroCurve() {
+  const item = cases[0];
+  elements.heroToi.textContent = `TOI ${item.toi}`;
+  renderCurve(elements.heroCurve, item.globalView, item.row, "global");
+}
 
 async function loadRepresentativeCases() {
   try {
     const dataUrl = new URL("data/representative_cases.json", window.location.href);
     const response = await fetch(dataUrl, { cache: "no-store" });
-    if (!response.ok) throw new Error(`HTTP ${response.status} at ${dataUrl.pathname}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const payload = await response.json();
-    if (!Array.isArray(payload.cases) || payload.cases.length === 0) throw new Error("The data file has no cases");
+    if (!Array.isArray(payload.cases) || payload.cases.length === 0) throw new Error("No cases in data file");
     cases = payload.cases.map((item) => ({
-      toi: item.toi, label: item.label === 1 ? "CP" : "FP", stage1: item.stage1Score,
-      stage2: item.stage2Score, globalView: item.globalView, localView: item.localView,
+      toi: item.toi,
+      label: item.label === 1 ? "CP" : "FP",
+      stage1: item.stage1Score,
+      stage2: item.stage2Score,
+      globalView: item.globalView,
+      localView: item.localView,
     }));
     currentIndex = 0;
-    elements.source.textContent = "Representative test sample · 13 cases";
-    elements.context.textContent = "A deterministic, outcome-stratified sample from the sealed temporal test set.";
-    elements.evidenceNote.textContent = "These 13 real curve pairs are selected to mirror the full Stage 2 test outcome mix: 8 correct predictions and 5 errors.";
+    elements.source.textContent = `Representative test sample | ${cases.length} cases`;
+    elements.context.textContent = "Inspect both phase-folded views, then make the call before the model and catalogue are revealed.";
     resetCase();
+    updateHeroCurve();
   } catch (error) {
-    const detail = error instanceof Error ? error.message : "Unknown loading error";
-    elements.source.textContent = "Error-gallery fallback · 6 cases";
-    elements.context.textContent = `Representative data could not load (${detail}). Showing documented error-gallery cases instead.`;
-    elements.evidenceNote.textContent = "Every displayed curve is a documented model error from the project’s error gallery, not a representative performance sample.";
+    const detail = error instanceof Error ? error.message : "unknown error";
+    elements.source.textContent = "Documented error-gallery fallback";
+    elements.context.textContent = `Representative data could not load (${detail}). Serve the site over HTTP to load the full sample.`;
+    resetCase();
+    updateHeroCurve();
   }
 }
+
+function initStarfield() {
+  const canvas = document.querySelector("#starfield");
+  const context = canvas.getContext("2d");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let stars = [];
+  let width = 0;
+  let height = 0;
+  let frame = 0;
+
+  function resize() {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    const count = Math.min(180, Math.floor((width * height) / 8500));
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 1.15 + .2,
+      alpha: Math.random() * .55 + .18,
+      pulse: Math.random() * Math.PI * 2,
+      speed: Math.random() * .16 + .025,
+    }));
+  }
+
+  function draw(time = 0) {
+    context.clearRect(0, 0, width, height);
+    stars.forEach((star) => {
+      if (!reducedMotion) {
+        star.y += star.speed;
+        if (star.y > height + 2) star.y = -2;
+      }
+      const alpha = star.alpha + Math.sin(time * .0008 + star.pulse) * .12;
+      context.beginPath();
+      context.fillStyle = `rgba(205, 224, 255, ${Math.max(.08, alpha)})`;
+      context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      context.fill();
+    });
+    if (!reducedMotion) frame = window.requestAnimationFrame(draw);
+  }
+
+  resize();
+  draw();
+  window.addEventListener("resize", resize);
+  window.addEventListener("pagehide", () => window.cancelAnimationFrame(frame), { once: true });
+}
+
+resetCase();
+updateHeroCurve();
 loadRepresentativeCases();
+initStarfield();
