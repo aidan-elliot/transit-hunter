@@ -389,7 +389,13 @@ h1 span {
   .stellar-light { inset: 16%; }
   .planet { height: 12%; width: 12%; }
   .lens-flare-canvas { opacity: .86; }
-  .signal-card { bottom: 5%; left: 3%; width: 64%; }
+  .signal-card {
+    bottom: 5%;
+    left: max(3%, calc((100% - 100vw) / 2 + 1rem));
+    max-width: calc(100vw - 2rem);
+    padding: .55rem .7rem .4rem;
+    width: 64%;
+  }
   .home-description {
     grid-area: description;
     line-height: 1.58;
@@ -485,6 +491,10 @@ h1 span {
 @media (max-width: 370px) {
   .home-hero { padding-inline: 1rem; }
   .hero-visual { margin-top: -1rem; width: 108vw; }
+  .signal-card {
+    left: calc((100% - 100vw) / 2 + .85rem);
+    max-width: calc(100vw - 1.7rem);
+  }
   .home-description { font-size: .86rem; }
   .demo-screen { padding-inline: .8rem; }
   .demo-topline,

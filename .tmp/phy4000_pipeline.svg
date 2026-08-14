@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#315A7D"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#17365D" flood-opacity="0.16"/>
+    </filter>
+    <style>
+      .box { fill:#F5F8FB; stroke:#315A7D; stroke-width:2; rx:14; filter:url(#shadow); }
+      .stage { fill:#D9EAF7; stroke:#17365D; stroke-width:2.4; rx:14; filter:url(#shadow); }
+      .diag { fill:#FFF2CC; stroke:#9A6C00; stroke-width:2; rx:14; filter:url(#shadow); }
+      .result { fill:#E2F0D9; stroke:#3E6D2E; stroke-width:2.4; rx:14; filter:url(#shadow); }
+      .label { font-family:Arial,sans-serif; font-size:24px; fill:#1F2D3D; text-anchor:middle; dominant-baseline:middle; }
+      .small { font-family:Arial,sans-serif; font-size:19px; fill:#405365; text-anchor:middle; dominant-baseline:middle; }
+      .arrow { stroke:#315A7D; stroke-width:3; fill:none; marker-end:url(#arrow); }
+      .title { font-family:Arial,sans-serif; font-size:29px; font-weight:bold; fill:#17365D; text-anchor:middle; }
+    </style>
+  </defs>
+  <text class="title" x="600" y="38">Implemented TESS transit-candidate vetting pipeline</text>
+
+  <rect class="box" x="45" y="78" width="245" height="78"/>
+  <text class="label" x="167" y="107">Frozen TOI</text>
+  <text class="label" x="167" y="136">catalogue snapshot</text>
+
+  <rect class="box" x="360" y="78" width="245" height="78"/>
+  <text class="label" x="482" y="107">Label and</text>
+  <text class="label" x="482" y="136">availability audit</text>
+
+  <rect class="box" x="675" y="78" width="245" height="78"/>
+  <text class="label" x="797" y="107">SPOC 120-second</text>
+  <text class="label" x="797" y="136">light curves</text>
+
+  <rect class="box" x="955" y="78" width="200" height="78"/>
+  <text class="label" x="1055" y="117">BLS search</text>
+
+  <path class="arrow" d="M290 117 L360 117"/>
+  <path class="arrow" d="M605 117 L675 117"/>
+  <path class="arrow" d="M920 117 L955 117"/>
+
+  <rect class="box" x="710" y="255" width="300" height="90"/>
+  <text class="label" x="860" y="286">Global and local</text>
+  <text class="label" x="860" y="318">phase-folded views</text>
+
+  <rect class="stage" x="710" y="435" width="300" height="92"/>
+  <text class="label" x="860" y="466">Stage 1</text>
+  <text class="small" x="860" y="499">Two-branch 1D CNN</text>
+
+  <rect class="diag" x="190" y="255" width="360" height="90"/>
+  <text class="label" x="370" y="285">BLS and vetting diagnostics</text>
+  <text class="small" x="370" y="318">Odd/even, secondary, symmetry, sectors</text>
+
+  <rect class="stage" x="395" y="435" width="245" height="92"/>
+  <text class="label" x="517" y="466">Stage 2</text>
+  <text class="small" x="517" y="499">Logistic regression</text>
+
+  <rect class="result" x="350" y="605" width="500" height="72"/>
+  <text class="label" x="600" y="630">Candidate score and validation-selected threshold</text>
+  <text class="small" x="600" y="657">Ranks candidates; does not confirm planets</text>
+
+  <path class="arrow" d="M1055 156 C1055 205 935 210 880 255"/>
+  <path class="arrow" d="M1000 156 C900 205 550 205 430 255"/>
+  <path class="arrow" d="M860 345 L860 435"/>
+  <path class="arrow" d="M370 345 C370 390 465 395 500 435"/>
+  <path class="arrow" d="M710 480 L640 480"/>
+  <path class="arrow" d="M517 527 C517 570 560 578 590 605"/>
+</svg>
