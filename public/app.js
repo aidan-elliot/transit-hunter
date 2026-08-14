@@ -121,9 +121,9 @@ function showModel() {
   const item = cases[currentIndex];
   const stage1Call = item.stage1 >= thresholds.stage1 ? "promoted" : "rejected";
   elements.visitorDecision.textContent = selectedGuess === "planet" ? "Planet candidate" : "False positive";
-  elements.visitorDetail.textContent = "Locked in - answer hidden";
+  elements.visitorDetail.textContent = "Answer hidden";
   elements.modelDecision.textContent = modelCall(item.stage2);
-  elements.modelDetail.textContent = `Stage 1 ${stage1Call} | Stage 2 ${item.stage2.toFixed(3)}`;
+  elements.modelDetail.textContent = `Stage 1: ${stage1Call} · Stage 2 score: ${item.stage2.toFixed(3)}`;
   elements.human.hidden = true;
   elements.revealStage.hidden = false;
   elements.revealStage.classList.remove("is-entering");
@@ -139,10 +139,10 @@ function showCatalogue() {
   const modelCorrect = modelIsPlanet === isPlanet;
 
   elements.visitor.classList.add(humanCorrect ? "correct-guess" : "incorrect-guess");
-  elements.visitorDecision.textContent = humanCorrect ? "Correct - good call" : "Not this time";
-  elements.visitorDetail.textContent = humanCorrect ? "Your classification matches the catalogue" : "Your classification differs from the catalogue";
+  elements.visitorDecision.textContent = selectedGuess === "planet" ? "Planet candidate" : "False positive";
+  elements.visitorDetail.textContent = humanCorrect ? "Matches catalogue" : "Does not match catalogue";
   elements.catalogueDecision.textContent = isPlanet ? "Confirmed planet" : "False positive";
-  elements.catalogueDetail.textContent = modelCorrect ? "The model also classified this case correctly" : "The model misclassified this case";
+  elements.catalogueDetail.textContent = modelCorrect ? "Model matches this outcome" : "Model does not match this outcome";
   elements.catalogue.hidden = false;
   elements.verdictGrid.classList.add("has-catalogue");
   elements.revealAnswer.hidden = true;
@@ -190,7 +190,7 @@ async function loadRepresentativeCases() {
     }));
     currentIndex = 0;
     elements.source.textContent = `${cases.length} representative test cases`;
-    elements.context.textContent = "Inspect both phase-folded views, then make the call before the model and catalogue are revealed.";
+    elements.context.textContent = "Compare the full phase curve with the transit window. Choose a classification before revealing the catalogue outcome.";
     resetCase();
   } catch (error) {
     const detail = error instanceof Error ? error.message : "unknown error";
@@ -241,67 +241,121 @@ function initTransitVisual() {
     context.fill();
   }
 
-  function drawFlare(overlap, edgeBoost) {
+  function drawFlare(overlap, edgeBoost, planetPosition) {
     context.clearRect(0, 0, width, height);
     const sourceX = width * .5;
     const sourceY = height * .5;
     const scale = Math.min(width, height);
-    const visibility = Math.max(.06, 1 - overlap * .9);
-    const intensity = visibility * (.42 + edgeBoost * .22);
+    const visibility = .16 + (1 - overlap) * .84;
+    const intensity = Math.min(1.2, visibility * .9 + edgeBoost * .38);
 
     context.save();
     context.globalCompositeOperation = "screen";
 
-    drawRadial(sourceX, sourceY, scale * .23, [
-      [0, `rgba(255,250,224,${.22 * intensity})`],
-      [.12, `rgba(255,218,126,${.12 * intensity})`],
-      [.45, `rgba(235,156,50,${.045 * intensity})`],
+    drawRadial(sourceX, sourceY, scale * .34, [
+      [0, `rgba(255,255,245,${.42 * intensity})`],
+      [.07, `rgba(255,238,181,${.27 * intensity})`],
+      [.24, `rgba(255,191,75,${.13 * intensity})`],
+      [.56, `rgba(217,112,25,${.045 * intensity})`],
       [1, "rgba(0,0,0,0)"],
     ]);
 
+    drawRadial(sourceX, sourceY, scale * .065, [
+      [0, `rgba(255,255,255,${.72 * intensity})`],
+      [.12, `rgba(255,249,219,${.5 * intensity})`],
+      [.5, `rgba(255,206,99,${.13 * intensity})`],
+      [1, "rgba(0,0,0,0)"],
+    ]);
+
+    context.save();
+    context.filter = `blur(${Math.max(6, scale * .021)}px)`;
+    const broadStreak = context.createLinearGradient(width * .02, sourceY, width * .98, sourceY);
+    broadStreak.addColorStop(0, "rgba(0,0,0,0)");
+    broadStreak.addColorStop(.18, `rgba(225,141,35,${.025 * intensity})`);
+    broadStreak.addColorStop(.34, `rgba(239,157,48,${.09 * intensity})`);
+    broadStreak.addColorStop(.5, `rgba(255,226,151,${.32 * intensity})`);
+    broadStreak.addColorStop(.66, `rgba(239,157,48,${.09 * intensity})`);
+    broadStreak.addColorStop(.82, `rgba(225,141,35,${.025 * intensity})`);
+    broadStreak.addColorStop(1, "rgba(0,0,0,0)");
+    context.fillStyle = broadStreak;
+    context.fillRect(width * .02, sourceY - scale * .032, width * .96, scale * .064);
+    context.restore();
+
     const streak = context.createLinearGradient(width * .05, sourceY, width * .95, sourceY);
     streak.addColorStop(0, "rgba(0,0,0,0)");
-    streak.addColorStop(.36, `rgba(220,151,50,${.025 * intensity})`);
-    streak.addColorStop(.49, `rgba(255,237,184,${.25 * intensity})`);
-    streak.addColorStop(.5, `rgba(255,255,245,${.48 * intensity})`);
-    streak.addColorStop(.51, `rgba(255,237,184,${.25 * intensity})`);
-    streak.addColorStop(.64, `rgba(220,151,50,${.025 * intensity})`);
+    streak.addColorStop(.18, `rgba(218,135,31,${.035 * intensity})`);
+    streak.addColorStop(.32, `rgba(230,150,42,${.13 * intensity})`);
+    streak.addColorStop(.43, `rgba(255,205,101,${.32 * intensity})`);
+    streak.addColorStop(.46, `rgba(255,221,134,${.4 * intensity})`);
+    streak.addColorStop(.495, `rgba(255,252,225,${.72 * intensity})`);
+    streak.addColorStop(.5, `rgba(255,255,255,${.94 * intensity})`);
+    streak.addColorStop(.505, `rgba(255,252,225,${.72 * intensity})`);
+    streak.addColorStop(.54, `rgba(255,221,134,${.4 * intensity})`);
+    streak.addColorStop(.57, `rgba(255,205,101,${.32 * intensity})`);
+    streak.addColorStop(.68, `rgba(230,150,42,${.13 * intensity})`);
+    streak.addColorStop(.82, `rgba(218,135,31,${.035 * intensity})`);
     streak.addColorStop(1, "rgba(0,0,0,0)");
+    context.save();
+    context.shadowBlur = Math.max(8, scale * .018);
+    context.shadowColor = `rgba(255,190,72,${.46 * intensity})`;
     context.fillStyle = streak;
-    context.fillRect(width * .05, sourceY - .65, width * .9, 1.3);
+    context.fillRect(width * .05, sourceY - 1.05, width * .9, 2.1);
+    context.restore();
 
-    const softStreak = context.createLinearGradient(width * .12, sourceY, width * .88, sourceY);
-    softStreak.addColorStop(0, "rgba(0,0,0,0)");
-    softStreak.addColorStop(.5, `rgba(255,199,89,${.055 * intensity})`);
-    softStreak.addColorStop(1, "rgba(0,0,0,0)");
-    context.fillStyle = softStreak;
-    context.fillRect(width * .12, sourceY - scale * .018, width * .76, scale * .036);
+    const chromaticStreak = context.createLinearGradient(width * .16, sourceY, width * .84, sourceY);
+    chromaticStreak.addColorStop(0, "rgba(0,0,0,0)");
+    chromaticStreak.addColorStop(.42, `rgba(119,104,255,${.13 * intensity})`);
+    chromaticStreak.addColorStop(.5, `rgba(255,235,179,${.24 * intensity})`);
+    chromaticStreak.addColorStop(.58, `rgba(255,158,65,${.11 * intensity})`);
+    chromaticStreak.addColorStop(1, "rgba(0,0,0,0)");
+    context.fillStyle = chromaticStreak;
+    context.fillRect(width * .16, sourceY + 1.65, width * .68, .8);
 
-    const glint = context.createLinearGradient(sourceX, sourceY - scale * .07, sourceX, sourceY + scale * .07);
+    const glint = context.createLinearGradient(sourceX, sourceY - scale * .12, sourceX, sourceY + scale * .12);
     glint.addColorStop(0, "rgba(0,0,0,0)");
-    glint.addColorStop(.5, `rgba(255,247,217,${.14 * intensity})`);
+    glint.addColorStop(.44, `rgba(255,239,191,${.07 * intensity})`);
+    glint.addColorStop(.5, `rgba(255,255,248,${.46 * intensity})`);
+    glint.addColorStop(.56, `rgba(255,239,191,${.07 * intensity})`);
     glint.addColorStop(1, "rgba(0,0,0,0)");
     context.fillStyle = glint;
-    context.fillRect(sourceX - .45, sourceY - scale * .07, .9, scale * .14);
+    context.fillRect(sourceX - .65, sourceY - scale * .12, 1.3, scale * .24);
 
-    const axisX = width * -.08;
-    const axisY = height * .08;
+    const axisX = width * -.095;
+    const axisY = height * .07;
     [
-      { distance: 1.7, radius: .018, color: [133, 113, 255], alpha: .065 },
-      { distance: 3.25, radius: .029, color: [247, 194, 72], alpha: .045 },
-      { distance: -2.4, radius: .013, color: [255, 230, 157], alpha: .055 },
+      { distance: -.85, radius: .014, color: [255, 232, 164], alpha: .17, ring: false },
+      { distance: 1.35, radius: .028, color: [255, 192, 79], alpha: .14, ring: false },
+      { distance: 2.45, radius: .052, color: [129, 111, 255], alpha: .13, ring: true },
+      { distance: 3.65, radius: .034, color: [255, 180, 62], alpha: .12, ring: true },
+      { distance: 4.55, radius: .017, color: [255, 235, 183], alpha: .14, ring: false },
     ].forEach((ghost) => {
       const x = sourceX + axisX * ghost.distance;
       const y = sourceY + axisY * ghost.distance;
       const [red, green, blue] = ghost.color;
-      drawRadial(x, y, scale * ghost.radius, [
-        [0, `rgba(${red},${green},${blue},${ghost.alpha * intensity})`],
-        [.48, `rgba(${red},${green},${blue},${ghost.alpha * .25 * intensity})`],
-        [.64, "rgba(0,0,0,0)"],
-        [.78, `rgba(${red},${green},${blue},${ghost.alpha * .55 * intensity})`],
+      const alpha = ghost.alpha * intensity;
+      const stops = ghost.ring
+        ? [[0, "rgba(0,0,0,0)"], [.42, `rgba(${red},${green},${blue},${alpha * .08})`], [.68, `rgba(${red},${green},${blue},${alpha})`], [.78, `rgba(${red},${green},${blue},${alpha * .42})`], [1, "rgba(0,0,0,0)"]]
+        : [[0, `rgba(${red},${green},${blue},${alpha})`], [.22, `rgba(${red},${green},${blue},${alpha * .52})`], [1, "rgba(0,0,0,0)"]];
+      drawRadial(x, y, scale * ghost.radius, stops);
+    });
+
+    if (edgeBoost > .015) {
+      const side = planetPosition < .5 ? -1 : 1;
+      const contactX = sourceX + side * scale * starRadius;
+      const contactIntensity = edgeBoost * (.35 + (1 - overlap) * .65);
+      drawRadial(contactX, sourceY, scale * .052, [
+        [0, `rgba(255,255,255,${.76 * contactIntensity})`],
+        [.1, `rgba(255,238,174,${.54 * contactIntensity})`],
+        [.36, `rgba(255,178,55,${.16 * contactIntensity})`],
         [1, "rgba(0,0,0,0)"],
       ]);
-    });
+      const contactStreak = context.createLinearGradient(contactX - scale * .11, sourceY, contactX + scale * .11, sourceY);
+      contactStreak.addColorStop(0, "rgba(0,0,0,0)");
+      contactStreak.addColorStop(.5, `rgba(255,248,215,${.7 * contactIntensity})`);
+      contactStreak.addColorStop(1, "rgba(0,0,0,0)");
+      context.fillStyle = contactStreak;
+      context.fillRect(contactX - scale * .11, sourceY - .7, scale * .22, 1.4);
+    }
 
     context.restore();
   }
@@ -318,7 +372,7 @@ function initTransitVisual() {
     planet.style.left = `${(x * 100).toFixed(4)}%`;
     stellarLight.style.opacity = `${(1 - overlap * .055).toFixed(4)}`;
     fluxLine.setAttribute("d", `M10 35 C75 35 112 35 140 35 C158 35 165 ${dipY.toFixed(2)} 180 ${dipY.toFixed(2)} C195 ${dipY.toFixed(2)} 202 35 220 35 C248 35 285 35 350 35`);
-    drawFlare(overlap, edgeBoost);
+    drawFlare(overlap, edgeBoost, x);
   }
 
   function animate(time) {
