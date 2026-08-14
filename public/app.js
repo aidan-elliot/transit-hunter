@@ -200,6 +200,139 @@ async function loadRepresentativeCases() {
   }
 }
 
+function initTransitVisual() {
+  const visual = document.querySelector(".hero-visual");
+  const planet = document.querySelector("#transit-planet");
+  const stellarLight = document.querySelector(".stellar-light");
+  const fluxLine = document.querySelector("#flux-line");
+  const canvas = document.querySelector("#lens-flare-canvas");
+  if (!visual || !planet || !stellarLight || !fluxLine || !canvas) return;
+
+  const context = canvas.getContext("2d");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const cycleDuration = 42000;
+  const starRadius = .3;
+  const planetRadius = .065;
+  let frame = 0;
+  let width = 0;
+  let height = 0;
+
+  function resizeCanvas() {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    const bounds = visual.getBoundingClientRect();
+    width = Math.max(1, bounds.width);
+    height = Math.max(1, bounds.height);
+    canvas.width = Math.round(width * ratio);
+    canvas.height = Math.round(height * ratio);
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+  }
+
+  function smoothstep(edge0, edge1, value) {
+    const amount = Math.min(1, Math.max(0, (value - edge0) / (edge1 - edge0)));
+    return amount * amount * (3 - 2 * amount);
+  }
+
+  function drawRadial(x, y, radius, stops) {
+    const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
+    stops.forEach(([offset, color]) => gradient.addColorStop(offset, color));
+    context.fillStyle = gradient;
+    context.beginPath();
+    context.arc(x, y, radius, 0, Math.PI * 2);
+    context.fill();
+  }
+
+  function drawFlare(overlap, edgeBoost) {
+    context.clearRect(0, 0, width, height);
+    const sourceX = width * .5;
+    const sourceY = height * .5;
+    const scale = Math.min(width, height);
+    const visibility = Math.max(.06, 1 - overlap * .9);
+    const intensity = visibility * (.42 + edgeBoost * .22);
+
+    context.save();
+    context.globalCompositeOperation = "screen";
+
+    drawRadial(sourceX, sourceY, scale * .23, [
+      [0, `rgba(255,250,224,${.22 * intensity})`],
+      [.12, `rgba(255,218,126,${.12 * intensity})`],
+      [.45, `rgba(235,156,50,${.045 * intensity})`],
+      [1, "rgba(0,0,0,0)"],
+    ]);
+
+    const streak = context.createLinearGradient(width * .05, sourceY, width * .95, sourceY);
+    streak.addColorStop(0, "rgba(0,0,0,0)");
+    streak.addColorStop(.36, `rgba(220,151,50,${.025 * intensity})`);
+    streak.addColorStop(.49, `rgba(255,237,184,${.25 * intensity})`);
+    streak.addColorStop(.5, `rgba(255,255,245,${.48 * intensity})`);
+    streak.addColorStop(.51, `rgba(255,237,184,${.25 * intensity})`);
+    streak.addColorStop(.64, `rgba(220,151,50,${.025 * intensity})`);
+    streak.addColorStop(1, "rgba(0,0,0,0)");
+    context.fillStyle = streak;
+    context.fillRect(width * .05, sourceY - .65, width * .9, 1.3);
+
+    const softStreak = context.createLinearGradient(width * .12, sourceY, width * .88, sourceY);
+    softStreak.addColorStop(0, "rgba(0,0,0,0)");
+    softStreak.addColorStop(.5, `rgba(255,199,89,${.055 * intensity})`);
+    softStreak.addColorStop(1, "rgba(0,0,0,0)");
+    context.fillStyle = softStreak;
+    context.fillRect(width * .12, sourceY - scale * .018, width * .76, scale * .036);
+
+    const glint = context.createLinearGradient(sourceX, sourceY - scale * .07, sourceX, sourceY + scale * .07);
+    glint.addColorStop(0, "rgba(0,0,0,0)");
+    glint.addColorStop(.5, `rgba(255,247,217,${.14 * intensity})`);
+    glint.addColorStop(1, "rgba(0,0,0,0)");
+    context.fillStyle = glint;
+    context.fillRect(sourceX - .45, sourceY - scale * .07, .9, scale * .14);
+
+    const axisX = width * -.08;
+    const axisY = height * .08;
+    [
+      { distance: 1.7, radius: .018, color: [133, 113, 255], alpha: .065 },
+      { distance: 3.25, radius: .029, color: [247, 194, 72], alpha: .045 },
+      { distance: -2.4, radius: .013, color: [255, 230, 157], alpha: .055 },
+    ].forEach((ghost) => {
+      const x = sourceX + axisX * ghost.distance;
+      const y = sourceY + axisY * ghost.distance;
+      const [red, green, blue] = ghost.color;
+      drawRadial(x, y, scale * ghost.radius, [
+        [0, `rgba(${red},${green},${blue},${ghost.alpha * intensity})`],
+        [.48, `rgba(${red},${green},${blue},${ghost.alpha * .25 * intensity})`],
+        [.64, "rgba(0,0,0,0)"],
+        [.78, `rgba(${red},${green},${blue},${ghost.alpha * .55 * intensity})`],
+        [1, "rgba(0,0,0,0)"],
+      ]);
+    });
+
+    context.restore();
+  }
+
+  function render(position) {
+    const x = .5 - .41 * Math.cos(position * Math.PI * 2);
+    const distance = Math.abs(x - .5);
+    const outerContact = starRadius + planetRadius;
+    const innerContact = starRadius - planetRadius;
+    const overlap = 1 - smoothstep(innerContact, outerContact, distance);
+    const edgeBoost = Math.exp(-Math.pow((distance - starRadius) / .038, 2));
+    const dipY = 35 + overlap * 31;
+
+    planet.style.left = `${(x * 100).toFixed(4)}%`;
+    stellarLight.style.opacity = `${(1 - overlap * .055).toFixed(4)}`;
+    fluxLine.setAttribute("d", `M10 35 C75 35 112 35 140 35 C158 35 165 ${dipY.toFixed(2)} 180 ${dipY.toFixed(2)} C195 ${dipY.toFixed(2)} 202 35 220 35 C248 35 285 35 350 35`);
+    drawFlare(overlap, edgeBoost);
+  }
+
+  function animate(time) {
+    render((time % cycleDuration) / cycleDuration);
+    frame = window.requestAnimationFrame(animate);
+  }
+
+  resizeCanvas();
+  if (reducedMotion) render(.5);
+  else frame = window.requestAnimationFrame(animate);
+  window.addEventListener("resize", resizeCanvas);
+  window.addEventListener("pagehide", () => window.cancelAnimationFrame(frame), { once: true });
+}
+
 function initStarfield() {
   const canvas = document.querySelector("#starfield");
   const context = canvas.getContext("2d");
@@ -251,4 +384,5 @@ function initStarfield() {
 
 resetCase();
 loadRepresentativeCases();
+initTransitVisual();
 initStarfield();

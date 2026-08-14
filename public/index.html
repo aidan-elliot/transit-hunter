@@ -15,7 +15,6 @@
       <section class="screen home-screen is-active" id="home-screen" aria-labelledby="home-title">
         <div class="home-hero">
           <div class="home-copy">
-            <p class="eyebrow">A TESS candidate-vetting experiment</p>
             <h1 id="home-title">Hunting for<br /><span>shadows.</span></h1>
             <p class="home-description">
               A two-stage neural network was trained to vet TESS planet candidates from folded light curves, then tested on unseen observations from a later catalogue snapshot.
@@ -36,78 +35,53 @@
             </div>
           </div>
 
-          <div class="hero-visual" aria-label="Animated illustration of a planet orbiting and transiting a luminous star">
-            <div class="orbit-guide" aria-hidden="true"></div>
+          <div class="hero-visual" aria-label="Animated illustration of a dark planet crossing a distant star">
             <div class="stellar-light" aria-hidden="true">
               <div class="stellar-corona"></div>
               <div class="star">
                 <span class="star-surface"></span>
-                <span class="starspot spot-one"></span>
-                <span class="starspot spot-two"></span>
               </div>
             </div>
-            <div class="lens-flare" aria-hidden="true">
-              <span class="lens-core"></span>
-              <span class="lens-streak"></span>
-              <span class="lens-glint"></span>
-              <span class="lens-ghost ghost-near"></span>
-              <span class="lens-ghost ghost-mid"></span>
-              <span class="lens-ghost ghost-far"></span>
-            </div>
-            <div class="planet" aria-hidden="true"><span></span></div>
+            <canvas class="lens-flare-canvas" id="lens-flare-canvas" aria-hidden="true"></canvas>
+            <div class="planet" id="transit-planet" aria-hidden="true"></div>
             <div class="signal-card" aria-label="Simplified relative brightness curve synchronized with the transit">
               <svg class="flux-curve" viewBox="0 0 360 96" role="img" aria-labelledby="flux-title">
                 <title id="flux-title">Relative starlight dips as the planet passes in front of the star</title>
                 <path class="flux-baseline" d="M10 35 H350" />
-                <path class="flux-line" d="M10 35 C75 35 112 35 140 35 C160 35 166 35 180 35 C194 35 200 35 220 35 C248 35 285 35 350 35">
-                  <animate
-                    attributeName="d"
-                    dur="20s"
-                    repeatCount="indefinite"
-                    keyTimes="0;.38;.48;.6;.72;.82;1"
-                    values="M10 35 C75 35 112 35 140 35 C160 35 166 35 180 35 C194 35 200 35 220 35 C248 35 285 35 350 35;
-                            M10 35 C75 35 112 35 140 35 C160 35 166 35 180 35 C194 35 200 35 220 35 C248 35 285 35 350 35;
-                            M10 35 C75 35 112 35 140 35 C158 35 165 48 180 48 C195 48 202 35 220 35 C248 35 285 35 350 35;
-                            M10 35 C75 35 112 35 140 35 C158 35 165 68 180 68 C195 68 202 35 220 35 C248 35 285 35 350 35;
-                            M10 35 C75 35 112 35 140 35 C158 35 165 48 180 48 C195 48 202 35 220 35 C248 35 285 35 350 35;
-                            M10 35 C75 35 112 35 140 35 C160 35 166 35 180 35 C194 35 200 35 220 35 C248 35 285 35 350 35;
-                            M10 35 C75 35 112 35 140 35 C160 35 166 35 180 35 C194 35 200 35 220 35 C248 35 285 35 350 35" />
-                </path>
+                <path class="flux-line" id="flux-line" d="M10 35 C75 35 112 35 140 35 C158 35 165 35 180 35 C195 35 202 35 220 35 C248 35 285 35 350 35" />
               </svg>
             </div>
           </div>
         </div>
 
-        <div class="project-section" aria-labelledby="project-title">
-          <div class="project-intro">
-            <p class="eyebrow">Inside the experiment</p>
+        <section class="project-section" aria-labelledby="project-title">
+          <header class="project-intro">
             <h2 id="project-title">A stricter second look at possible planets.</h2>
             <p>The project asks whether shape alone is enough, or whether a second stage of physical diagnostics can reject more convincing false alarms.</p>
-          </div>
+          </header>
 
-          <div class="project-grid">
-            <article class="project-card goal-card">
-              <span class="card-label">Goal</span>
-              <h3>Improve candidate triage without pretending to discover planets.</h3>
+          <div class="project-story">
+            <section class="project-chapter">
+              <h3>The question</h3>
               <p>Test whether a diagnostic second stage can reduce accepted false positives on observations from a newer TESS catalogue snapshot.</p>
-            </article>
-            <article class="project-card method-card">
-              <span class="card-label">Method</span>
-              <h3>Shape first. Diagnostics second.</h3>
+            </section>
+            <section class="project-chapter">
+              <h3>The approach</h3>
               <p>A two-view CNN reads global and transit-window light curves. Stage 2 adds period, depth, duration, BLS strength, odd/even differences and secondary-eclipse evidence.</p>
-            </article>
-            <article class="project-card results-card">
-              <span class="card-label">Held-out result</span>
-              <div class="result-number"><strong>17</strong><span>fewer accepted<br />false positives</span></div>
-              <p>False-positive rate fell from <strong>0.604 to 0.486</strong>. Recall also fell from <strong>0.851 to 0.716</strong>, so the improvement comes with a real temporal-generalisation trade-off.</p>
-            </article>
+            </section>
           </div>
 
-          <div class="glossary" aria-labelledby="glossary-title">
-            <div class="glossary-heading">
-              <span class="card-label">Plain-language guide</span>
-              <h3 id="glossary-title">Small glossary</h3>
+          <section class="results-section" aria-labelledby="results-title">
+            <h3 id="results-title">The result</h3>
+            <div class="result-number">
+              <strong>17</strong>
+              <span>fewer accepted<br />false positives</span>
             </div>
+            <p>False-positive rate fell from <strong>0.604 to 0.486</strong>. Recall also fell from <strong>0.851 to 0.716</strong>, so the improvement comes with a real temporal-generalisation trade-off.</p>
+          </section>
+
+          <section class="glossary" aria-labelledby="glossary-title">
+            <h3 id="glossary-title">Glossary</h3>
             <dl class="glossary-list">
               <div><dt>Transit</dt><dd>A small, temporary dimming when a planet crosses in front of its star.</dd></div>
               <div><dt>Light curve</dt><dd>A record of how a star's measured brightness changes over time.</dd></div>
@@ -116,8 +90,8 @@
               <div><dt>BLS</dt><dd>Box Least Squares, a search for regularly repeating, transit-shaped dips.</dd></div>
               <div><dt>Recall</dt><dd>The share of catalogue planets the model successfully keeps.</dd></div>
             </dl>
-          </div>
-        </div>
+          </section>
+        </section>
       </section>
 
       <section class="screen demo-screen" id="demo-screen" aria-labelledby="demo-title" aria-hidden="true">
